@@ -47,19 +47,19 @@
       <li class="font-weight-normal">
 
             {%if form.title.errors%}
-            {{form.title(class="form-control form-control is-invalid")}}
+            {{form.title(class="form-control form-control is-invalid", placeholder="type something")}}
             <div class="invalid-feedback">
               {%for error in form.title.errors%}
                 <span>{{error}}</span>
               {%endfor%}
             {%else%}
-          {{form.title(class="", style="background: inherit;")}}
+          {{form.title(class="form-control", placeholder="type something", style="margin-left:-20px;background: inherit;")}}
 
           {%endif%}
         </li>
 
 
-      <li class="ml-5">
+      <li class="ml-4 mt-1">
         {{form.submit(class="btn btn-sm btn-outline-info")}}
       </li>
 
@@ -79,7 +79,7 @@
     <span class="border-bottom ml-2 mr-2"></span>
     <div class="mr-4" style="margin-left:-75px; margin-right:20px;">
       <ul id="accountposts"style="list-style-type:none; width:450px;height:350px;overflow-x:hidden;">
-
+    {% if current_user.is_authenticated %}
     {%for task in mytasks | reverse %}
     {% if task.content != 'Completed' %}
     {% include 'mainpageaccountpost.html' %}
@@ -90,6 +90,7 @@
     {% include 'mainpageaccountpost.html' %}
     {% endif %}
     {%endfor%}
+    {% endif %}
   </ul>
 
   </div>

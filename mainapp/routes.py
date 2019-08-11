@@ -22,6 +22,7 @@ def datetime_from_utc_to_local(utc_datetime):
 
 
 @app.route('/', methods=['GET', 'POST'])
+@login_required
 def home():
     title = 'Hello'
     localtimes = []
@@ -31,10 +32,12 @@ def home():
         mytasks = Post.query.filter_by(user_id=current_user.id).all()
     else:
         tasks = []
+        mytasks=[]
 
     if tasks:
         for task in tasks:
             localtimes.append(datetime_from_utc_to_local(task.date_posted))
+    if mytasks:
         for task in mytasks:
             localtimes.append(datetime_from_utc_to_local(task.date_posted))
 

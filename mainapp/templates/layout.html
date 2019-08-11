@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style media="screen">
       body{
-        background: rgba(234, 236, 186, 1);
+        background: rgba(92, 90, 115, 1);
       }
     </style>
     <title>{{title}}</title>
   </head>
   <body>
 
-  <nav class="sticky-top navbar navbar-expand-lg navbar-light" style="background-color:rgb(129, 246, 125)">
+  <nav class="sticky-top navbar navbar-expand-lg navbar-light" style="background-color:rgb(30, 173, 227)">
     <a class="navbar-brand" href="{{url_for('home')}}">Wacky Schemes</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -25,17 +25,17 @@
     <ul class="navbar-nav mr-auto mt-1">
       {% if current_user.is_authenticated %}
       <li class="nav-item active">
-        <a class="nav-link text-warning" href="{{url_for('logout')}}">Logout<span class="sr-only">(current)</span></a>
+        <a class="nav-link navtext" href="{{url_for('logout')}}">Logout<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link text-warning" href="{{url_for('account', account_id=current_user.id)}}">Account<span class="sr-only">(current)</span></a>
+        <a class="nav-link navtext" href="{{url_for('account', account_id=current_user.id)}}">Account<span class="sr-only">(current)</span></a>
       </li>
       {% else %}
       <li class="nav-item active">
-        <a class="nav-link text-warning" href="{{url_for('login')}}">Log In<span class="sr-only">(current)</span></a>
+        <a class="nav-link navtext" href="{{url_for('login')}}">Log In<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link text-warning" href="{{url_for('register')}}">Register<span class="sr-only">(current)</span></a>
+        <a class="nav-link navtext" href="{{url_for('register')}}">Register<span class="sr-only">(current)</span></a>
       </li>
       {% endif %}
     <ul>
