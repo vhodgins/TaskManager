@@ -1,0 +1,7 @@
+#Redesign Whole Website
+#Add Comments -> ajax
+#Add Followers list
+#Add likes - > ajax
+#Learn Flask-migrate - - > database management
+#Redesign Account page
+#Revamp task algorithm
