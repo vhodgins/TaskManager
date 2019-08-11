@@ -28,12 +28,16 @@ def home():
     if current_user.is_authenticated:
         title = "Hello  " + str(current_user.username)
         tasks=Post.query.filter(Post.user_id != current_user.id).all()
+        mytasks = Post.query.filter_by(user_id=current_user.id).all()
     else:
         tasks = []
 
     if tasks:
         for task in tasks:
             localtimes.append(datetime_from_utc_to_local(task.date_posted))
+        for task in mytasks:
+            localtimes.append(datetime_from_utc_to_local(task.date_posted))
+
     comment = CommentForm()
     form = CreateTask()
 
@@ -46,7 +50,7 @@ def home():
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('home'))
-    return render_template('home.html', title=title, tasks=tasks, form=form,comment=comment, localtimes=localtimes)
+    return render_template('home.html', title=title, tasks=tasks,mytasks=mytasks, form=form,comment=comment, localtimes=localtimes)
 
 @app.route('/register', methods=['GET','POST'])
 def register():

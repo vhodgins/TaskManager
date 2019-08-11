@@ -1,0 +1,38 @@
+
+<li>
+<div class="card ml-5 bg-light mb-4" id='tasksection{{task.id}}'style="width:85%; height:80px">
+  <div class="card-body" style="margin-left: -30px; margin-top:-7px;">
+    <div class="row ml-2" style="margin-top: -5px;">
+      <img src="{{url_for('static', filename='pfps/'+task.author.image_file)}}" class="ml-4" style="border: 2px solid lightgrey; border-radius:10%; width:40px; height: 40px;" alt="">
+    <h5 class="ml-1 mt-1"><a style="color:inherit; text-decoration:none;"href="{{url_for('account', account_id=task.author.id)}}">{{task.author.username}}</a></h5> <!-- .strftime('%I:%M %p %x') -->
+    <p class="text-muted ml-5" style="font-size:10pt; margin-top: 5px;">{{localtimes[mytasks.index(task)].strftime('%I:%M %p %x')}}</p>
+  </div>
+    <div class="row">
+
+    <ul style="list-style-type:none; display:flex; flex-direction: row;">
+      <li class="font-weight-normal"><a href="{{url_for('post', post_id=task.id)}}" style="color:inherit; text-decoration:none;">{{task.title}}</a></li>
+      <li class="font-weight-light ml-3" id='content{{task.id}}'>{{task.content}}</li>
+
+    </ul>
+    <span style="position:absolute;right: 20px;">
+      <form class="" action="index.html" method="post">
+      {% if task.user_id == current_user.id %}
+      {% if task.content != "Completed" %}
+      <button type="button" class='updatebutton btn btn-outline-success btn-sm' id='button{{task.id}}' style="margin-top:-20px;"  task_id='{{task.id}}' name="button">
+      <img style="width:30px; margin-top:0px;" id='buttonimg{{task.id}}' src="https://static.thenounproject.com/png/21729-200.png">
+      </button>
+
+      {% else %}
+        <button type="button" class='updatebutton btn btn-outline-danger btn-sm' id='button{{task.id}}' task_id='{{task.id}}' style="margin-top:-20px;" name="button">
+      <img style="width:30px; margin-top:0px;" id='buttonimg{{task.id}}' src="https://ui-ex.com/images/x-transparent-circle-symbol-2.png">
+      </button>
+      {% endif %}
+      {% endif %}
+      </form>
+    </span>
+  </div>
+
+
+  </div>
+</div>
+</li>

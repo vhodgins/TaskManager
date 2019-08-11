@@ -21,19 +21,28 @@
 
       }
     }
+    #accountposts::-webkit-scrollbar { width: 0 !important }
 
 </style>
 
 
-<div class="card ml-5 bg-light mb-4 " style="width:50%; height:100px">
-  <div class="card-body" style="margin-left: -30px; margin-top:-7px;">
-    <legend class="ml-5">New Task</legend>
+
+
+<!-- Stack the columns on mobile by making one full-width and the other half-width -->
+<div class="row">
+
+    <div class="col-sm-1"></div>
+
+  <div class="col-6 col-sm-3 position-fixed" style="z-index:99;">
+    <div class="card card-body " style="margin-right:-30px;">
+      <legend style="margin-top:-10px;">Make a Task</legend>
+      <span class="border-bottom ml-2 mr-2 mb-3"></span>
     <div class="row">
 
     <ul style="list-style-type:none; display:flex; flex-direction: row;">
     <form class="" action="" method="post">
       {{form.hidden_tag()}}
-      <div class="row ml-2">
+      <div class="row">
 
       <li class="font-weight-normal">
 
@@ -61,34 +70,52 @@
 
 
     </div>
+
+
+  </div>
+
+  <div class="card mt-4" style="height:450px; margin-right:-30px;">
+    <legend class="ml-3 mt-2">My Tasks</legend>
+    <span class="border-bottom ml-2 mr-2"></span>
+    <div class="mr-4" style="margin-left:-75px; margin-right:20px;">
+      <ul id="accountposts"style="list-style-type:none; width:450px;height:350px;overflow-x:hidden;">
+
+    {%for task in mytasks | reverse %}
+    {% if task.content != 'Completed' %}
+    {% include 'mainpageaccountpost.html' %}
+    {% endif %}
+    {%endfor%}
+    {%for task in mytasks | reverse %}
+    {% if task.content == 'Completed' %}
+    {% include 'mainpageaccountpost.html' %}
+    {% endif %}
+    {%endfor%}
+  </ul>
+
+  </div>
   </div>
 </div>
 
-<div class="">
-<div id="tasks" class="mb-4">
-<div class="border-bottom border-success mb-3">
-  <h3 class="font-weight-light text-right mr-5">Tasks</h3>
-</div>
-<!-- Item Template -->
-{%for task in tasks | reverse %}
-{% if task.content != 'Completed' %}
-{% include 'singlepost.html' %}
-{% endif %}
-{%endfor%}
-</div>
+  <div class="col-sm-5"></div>
 
-<div id="tasks" class="">
-<div class="border-bottom border-success mb-5">
-  <h3 class="font-weight-light text-right mr-5">Completed</h3>
-  </div>
+
+  <div class="col-6 col-sm-6 card">
+    <legend class="ml-3 mt-2">Tasks at Hand</legend>
+    <span class="border-bottom ml-2 mr-2 mb-3"></span>
+    <div class="mr-4" style="margin-left:-25;">
   {%for task in tasks | reverse %}
-  {% if task.content == 'Completed' %}
+  {% if task.content != 'Completed' %}
   {% include 'singlepost.html' %}
   {% endif %}
   {%endfor%}
-  </div>
 </div>
 </div>
+</div>
+
+<!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
+
+
+
 
 
 

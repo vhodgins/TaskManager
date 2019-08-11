@@ -5,3 +5,24 @@
 #Learn Flask-migrate - - > database management
 #Redesign Account page
 #Revamp task algorithm
+
+
+
+<!-- Item Template -->
+<!--   Tasks
+{%for task in tasks | reverse %}
+{% if task.content != 'Completed' %}
+{% include 'singlepost.html' %}
+{% endif %}
+{%endfor%}
+-->
+
+
+
+  <!-- Tasks Completed
+  {%for task in tasks | reverse %}
+  {% if task.content == 'Completed' %}
+  {% include 'singlepost.html' %}
+  {% endif %}
+  {%endfor%}
+  -->
