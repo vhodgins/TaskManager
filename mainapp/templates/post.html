@@ -1,0 +1,88 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+
+  {% if current_user.id==task.author.id %}
+<div class="card ml-3 bg-light mb-4" style="width:90%; height:100px">
+  <div class="card-body" style="margin-left: -30px; margin-top:-7px;">
+      <legend class="ml-4">Edit Post</legend>
+    <div class="row">
+
+    <ul style="list-style-type:none; display:flex; flex-direction: row;">
+
+    <form class="" action="" method="post">
+      {{form.hidden_tag()}}
+      <div class="row ml-2">
+
+      <li class="font-weight-normal">
+
+            {%if form.title.errors%}
+            {{form.title(class="form-control form-control is-invalid")}}
+            <div class="invalid-feedback">
+              {%for error in form.title.errors%}
+                <span>{{error}}</span>
+              {%endfor%}
+            {%else%}
+          {{form.title(class="", style="background: inherit;")}}
+
+          {%endif%}
+        </li>
+
+
+      <li class="ml-5">
+        {{form.submit(class="btn btn-sm btn-outline-info")}}
+      </li>
+
+
+    </div>
+    </form>
+    </ul>
+    <span style="position:absolute;right: 20px;"><button type="button" style=" margin-top:-8px;" class="mb-2 btn btn-outline-light" name="button">
+      <img src="https://static.thenounproject.com/png/21729-200.png"
+      width="23px;">
+
+    </button>
+    </span>
+
+
+  </div>
+</div>
+  {% endif %}
+  {% if current_user.id != task.author.id %}
+
+
+  <div id="tasks" class="mb-4">
+
+  <!-- Item Template -->
+  <div class="card ml-5 bg-light mb-4" style="width:90%; height:80px">
+    <div class="card-body" style="margin-left: -30px; margin-top:-7px;">
+      <div class="row ml-2" style="margin-top: -5px;">
+        <img src="{{url_for('static', filename='pfps/'+task.author.image_file)}}" class="ml-4" style="border: 2px solid white; border-radius:50%; width:40px; height: 40px;" alt="">
+      <h5 class="ml-1 mt-1"><a style="color:inherit; text-decoration:none;"href="{{url_for('account', account_id=task.author.id)}}">{{task.author.username}}</a></h5> <!-- .strftime('%I:%M %p %x') -->
+      <p class="text-muted ml-5" style="font-size:10pt; margin-top: 5px;">{{localtime.strftime('%I:%M %p %x')}}</p>
+    </div>
+      <div class="row">
+
+      <ul style="list-style-type:none; display:flex; flex-direction: row;">
+        <li class="font-weight-normal"><a href="{{url_for('post', post_id=task.id)}}" style="color:inherit; text-decoration:none;">{{task.title}}</a></li>
+        <li class="font-weight-light ml-3">{{task.content}}</li>
+      </ul>
+      <span style="position:absolute;right: 20px;"><button type="button" style=" margin-top:-15px;" class="mb-2 btn btn-outline-light" name="button">
+        <img src="https://static.thenounproject.com/png/21729-200.png"
+        width="23px;">
+
+      </button>
+      </span>
+    </div>
+
+    </div>
+  </div>
+
+
+  </div>
+
+  {% endif %}
+
+
+{% endblock content %}

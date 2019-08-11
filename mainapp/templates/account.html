@@ -1,0 +1,108 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="card bg-light">
+<div class="content-section ml-5 mt-3 mr-5">
+  <div class="card bg-dark mb-3">
+    <div class="m-2">
+
+  <div class="media">
+    <img class="" style="border: 2px white solid; border-radius:50%; height:100px;width:100px;"src="{{url_for('static' ,filename='pfps/'+account.image_file)}}">
+    <div class="media-body ml-5">
+      <h2 class="account-heading text-info">{{account.username}}</h2>
+      <p class="text-secondary">{{account.email}}</p>
+    </div>
+  </div>
+</div>
+</div>
+<div class="row">
+  {% if account.id == current_user.id %}
+<div class="card bg-info mb-4" style="width:50%;">
+
+  <form class="form-group ml-3 mt-3 mr-3" action="" enctype="multipart/form-data" method="post">
+    {{form.hidden_tag()}}
+    <fieldset class="form-group">
+      <div class="form-group">
+
+      <legend class="border-bottom">Update</legend>
+      <div class="form-group">
+        <div class="row ml-3">
+          {{form.username.label(class="form-control-label")}}
+        </div>
+          {%if form.username.errors%}
+          {{form.username(class="form-control form-control is-invalid")}}
+          <div class="invalid-feedback">
+            {%for error in form.username.errors%}
+              <span>{{error}}</span>
+            {%endfor%}
+          </div>
+          {%else%}
+        {{form.username(class="form-control-label form-control-lg")}}
+
+        {%endif%}
+
+      </div>
+      <div class="form-group">
+
+      <div class="row ml-3">
+        {{form.email.label(class="form-control-label")}}
+      </div>
+      {%if form.email.errors%}
+        {{form.email(class="form-control form-control is-invalid")}}
+        <div class="invalid-feedback">
+          {%for error in form.email.errors%}
+            <span>{{error}}</span>
+          {%endfor%}
+        </div>
+        {%else%}
+      {{form.email(class="form-control-label form-control-lg")}}
+
+      {%endif%}
+
+    </div>
+
+    <div class="form-group">
+      {{ form.picture.label()}}
+      {{ form.picture(class="form-control-file")}}
+      {% if form.picture.errors %}
+      {% for error in form.picture.errors %}
+        <span class="text-danger"> {{ error }}</span><br>
+      {% endfor %}
+      {% endif %}
+      </div>
+
+  <div class="form-group">
+    {{form.submit(class='btn btn-primary')}}
+  </div>
+
+    </fieldset>
+  </form>
+</div>
+{% endif %}
+  {% if account.id == current_user.id %}
+  <div class="card bg-success ml-5 mb-3" style="width:45%;">
+    <div class="title border-bottom ml-3 mr-3 mt-2 mb-2 text-right ">
+  {% else %}
+  <div class="card bg-success ml-3 mb-3" style="width:97%;">
+    <div class="title border-bottom ml-3 mr-3 mt-2 mb-2 text-left ">
+  {% endif %}
+
+
+      <legend>Tasks</legend>
+    </div>
+    {%for task in tasks| reverse %}
+    {% if task.content != 'Completed' %}
+    {% include 'accountpost.html' %}
+    {% endif %}
+    {%endfor%}
+    {%for task in tasks| reverse %}
+    {% if task.content == 'Completed' %}
+    {% include 'accountpost.html' %}
+    {% endif %}
+    {%endfor%}
+  </div>
+  </div>
+  </div>
+</div>
+
+<script src="{{url_for('static', filename='scripts/check.js')}}"></script>
+{% endblock content %}

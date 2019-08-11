@@ -1,0 +1,98 @@
+{%extends 'layout.html'%}
+{%block content%}
+<style media="screen">
+  .card-body ul li {
+    margin-left: 10px;
+  }
+  span button img:hover {
+    animation-name: rotate;
+    animation-duration: 100ms;
+    animation-fill-mode: forwards;
+  }
+  @keyframes rotate {
+    0%{
+
+        transform:rotate(0deg);
+
+    }
+      100% {
+
+      transform:rotate(-25deg);
+
+      }
+    }
+
+</style>
+
+<div class="card ml-5 bg-light mb-4 " style="width:90%; height:100px">
+  <div class="card-body" style="margin-left: -30px; margin-top:-7px;">
+    <legend class="ml-5">New Task</legend>
+    <div class="row">
+
+    <ul style="list-style-type:none; display:flex; flex-direction: row;">
+    <form class="" action="" method="post">
+      {{form.hidden_tag()}}
+      <div class="row ml-2">
+
+      <li class="font-weight-normal">
+
+            {%if form.title.errors%}
+            {{form.title(class="form-control form-control is-invalid")}}
+            <div class="invalid-feedback">
+              {%for error in form.title.errors%}
+                <span>{{error}}</span>
+              {%endfor%}
+            {%else%}
+          {{form.title(class="", style="background: inherit;")}}
+
+          {%endif%}
+        </li>
+
+
+      <li class="ml-5">
+        {{form.submit(class="btn btn-sm btn-outline-info")}}
+      </li>
+
+
+    </div>
+    </form>
+    </ul>
+
+
+    </div>
+  </div>
+</div>
+
+<div class="">
+<div id="tasks" class="mb-4">
+<div class="border-bottom border-success mb-3">
+  <h3 class="font-weight-light text-right mr-5">Tasks</h3>
+</div>
+<!-- Item Template -->
+{%for task in tasks | reverse %}
+{% if task.content != 'Completed' %}
+{% include 'singlepost.html' %}
+{% endif %}
+{%endfor%}
+</div>
+
+<div id="tasks" class="">
+<div class="border-bottom border-success mb-5">
+  <h3 class="font-weight-light text-right mr-5">Completed</h3>
+  </div>
+  {%for task in tasks | reverse %}
+  {% if task.content == 'Completed' %}
+  {% include 'singlepost.html' %}
+  {% endif %}
+  {%endfor%}
+  </div>
+</div>
+</div>
+
+
+
+
+<script src="{{url_for('static', filename='scripts/check.js')}}"></script>
+
+
+{%endblock content%}

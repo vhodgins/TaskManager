@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+<form class="form-group" action="" method="post">
+  {{form.hidden_tag()}}
+  <fieldset class="form-group">
+    <legend class="border-bottom">Edit Task</legend>
+    <div class="form-group">
+      <div class="row ml-3">
+        {{form.title.label(class="form-control-label")}}
+      </div>
+        {%if form.title.errors%}
+        {{form.title(class="form-control form-control is-invalid")}}
+        <div class="invalid-feedback">
+          {%for error in form.title.errors%}
+            <span>{{error}}</span>
+          {%endfor%}
+        {%else%}
+      {{form.title(class="form-control-label form-control-lg")}}
+
+      {%endif%}
+    </div>
+    <div class="form-group">
+      <div class="row ml-3">
+        {{form.content.label(class="form-control-label")}}
+      </div>
+        {%if form.content.errors%}
+        {{form.content(class="form-control form-control is-invalid")}}
+        <div class="invalid-feedback">
+          {%for error in form.content.errors%}
+            <span>{{error}}</span>
+          {%endfor%}
+        {%else%}
+      {{form.content(class="form-control-label form-control-lg")}}
+
+      {%endif%}
+    </div>
+
+    <div class="form-group">
+      {{form.submit(class='btn btn-outline-info')}}
+    </div>
+
+    </fieldset>
+        </form>
+
+
+
+{% endblock content %}

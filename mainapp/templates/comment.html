@@ -1,0 +1,39 @@
+{% block commentarea %}
+<div class="card-body" style="margin-left: -30px; margin-top:-7px;">
+  <p class="ml-5">Make a Comment</p>
+  <div class="row">
+
+  <ul style="list-style-type:none; display:flex; flex-direction: row;">
+  <form class="" action="" method="post">
+    {{comment.hidden_tag()}}
+    <div class="row ml-2">
+
+    <li class="font-weight-normal">
+
+        {%if comment.content.errors%}
+          {{comment.content(class="form-control form-control is-invalid")}}
+          <div class="invalid-feedback">
+            {%for error in comment.content.errors%}
+              <span>{{error}}</span>
+            {%endfor%}
+          {%else%}
+        {{comment.content(class="", style="background: inherit;")}}
+
+        {%endif%}
+      </li>
+
+
+    <li class="ml-5">
+      {{comment.submit(class="btn btn-sm btn-outline-info")}}
+    </li>
+
+
+  </div>
+  </form>
+  </ul>
+
+
+  </div>
+</div>
+
+{% endblock commentarea %}
