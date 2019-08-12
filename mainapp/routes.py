@@ -27,7 +27,7 @@ def home():
     title = 'Hello'
     localtimes = []
     if current_user.is_authenticated:
-        title = "Hello  " + str(current_user.username)
+        title = 'Wacky Schemes'
         tasks=Post.query.filter(Post.user_id != current_user.id).all()
         mytasks = Post.query.filter_by(user_id=current_user.id).all()
     else:

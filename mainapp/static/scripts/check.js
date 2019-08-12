@@ -16,10 +16,10 @@ $(document).ready(function() {
       $('#buttonimg' + task_id).attr('src', data.button_img);
       $('#content' + task_id).text(data.Content);
       if (data.Content == 'Completed'){
-      $('#button' + task_id).attr('class', 'updatebutton btn btn-sm btn-outline-danger');
+      $('#button' + task_id).attr('class', 'updatebutton');
     }
     else {
-      $('#button' + task_id).attr('class', 'updatebutton btn btn-sm btn-outline-success');
+      $('#button' + task_id).attr('class', 'updatebutton');
     }
      })
 
