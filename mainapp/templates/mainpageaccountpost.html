@@ -55,6 +55,18 @@
     <!--  <li class="font-weight-light ml-3"  id='content{{task.id}}'>{{task.content}}</li>
 -->
     </ul>
+    <ul style="position:absolute; right:20px; top:120px; list-style-type:none; display: flex; flex-direction:row">
+      <li>
+      <p class="" id="like{{task.id}}" style="font-size:10pt;">{{task.likes}}</p>
+    </li>
+    <li>
+      <a href="#" class="upvotebutton" id="upvote{{task.id}}" task_id="{{task.id}}" style="text-decoration: none; color: red" >T</a>
+    </li>
+    <li>
+      <a href="#" class="downvotebutton" id="downvote{{task.id}}" task_id="{{task.id}}" style="text-decoration: none; color: red" >┴</a>
+    </li>
+
+    </ul>
 
   </div>
 

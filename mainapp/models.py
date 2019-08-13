@@ -40,6 +40,7 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     comments = db.relationship('Comment', backref='comments', lazy=True)
+    likes = db.Column(db.Integer, nullable=False, default=0)
 
 
     def __repr__(self):

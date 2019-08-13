@@ -45,7 +45,6 @@ def home():
     comment = CommentForm()
     form = CreateTask()
 
-
     if form.validate_on_submit():
         if not current_user.is_authenticated:
             flash(f'You must be logged in to do that')
@@ -54,7 +53,7 @@ def home():
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('home'))
-    return render_template('home.html', title=title, account=current_user, tasks=tasks, mytasklocaltimes=mytasklocaltimes,mytasks=mytasks, form=form,comment=comment, localtimes=localtimes)
+    return render_template('home.html', title=title, account=current_user, tasks=tasks, mytasklocaltimes=mytasklocaltimes, mytasks=mytasks, form=form,comment=comment, localtimes=localtimes)
 
 @app.route('/register', methods=['GET','POST'])
 def register():
@@ -124,6 +123,19 @@ def post(post_id):
         form.content.data = post.content
     return render_template('post.html', form=form, task=post, title=post.title, localtime=localtime)
 
+
+@app.route('/upvote', methods=['GET','POST'])
+def upvote():
+    tasknumber = request.form['id']
+    p = Post.query.filter_by(id=tasknumber).first()
+    if request.form['lean'] == 'hey':
+        p.likes += 1
+        db.session.commit()
+    else:
+        p.likes -= 1
+        db.session.commit()
+    likes = p.likes
+    return jsonify({'result' : 'success', 'likes' : likes})
 
 @app.route('/posts/<post_id>/update')
 @login_required

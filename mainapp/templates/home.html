@@ -101,7 +101,7 @@
     <span class="border-bottom ml-2 mr-2"></span>
 
     <div class="mr-4" style="margin-left:-75px; margin-right:20px;">
-      <ul id="accountposts"style="list-style-type:none; width:450px;height:350px;overflow-x:hidden;">
+      <ul id="accountposts"  style="list-style-type:none; width:450px;height:350px;overflow-x:hidden;">
     {% if current_user.is_authenticated %}
     {%for task in mytasks | reverse %}
     {% if task.content != 'Completed' %}
@@ -117,6 +117,7 @@
   </ul>
 
   </div>
+    <span class="border-bottom ml-1 mr-1" style="margin-top:-16px;"></span>
   </div>
 </div>
 
@@ -125,7 +126,7 @@
 
   <div class="col-6 col-sm-6 card">
     <legend class="ml-3 mt-2">Tasks at Hand</legend>
-    <span class="border-bottom ml-2 mr-2 mb-3"></span>
+    <span class="border-bottom ml-2 mb-2 mr-2"></span>
     <div class="mr-4" style="margin-left:-25;">
   {%for task in tasks | reverse %}
   {% if task.content != 'Completed' %}
