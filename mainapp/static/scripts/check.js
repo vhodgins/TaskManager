@@ -15,7 +15,7 @@ $(document).ready(function() {
 
 
     req.done(function(data) {
-      $('#buttoimg' + task_id).attr('src', data.button_img);
+      $('#buttonimg' + task_id).attr('src', data.button_img);
       $('#content' + task_id).text(data.Content);
       if (data.Content == 'Completed'){
       $('#button' + task_id).attr('class', 'updatebutton');
