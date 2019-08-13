@@ -1,40 +1,61 @@
 
-<li>
-<div class="card ml-5 bg-light mb-4" id='tasksection{{task.id}}'style="width:85%; height:80px">
-  <div class="card-body" style="margin-left: -30px; margin-top:-7px;">
-    <p class="text-muted ml-5 float-right" style="font-size:10pt; margin-top: 5px;">{{localtimes[mytasks.index(task)].strftime('%I:%M %p %x')}}</p>
+<li class="leftlist">
+<div class="card ml-5 bg-light mb-4" id='tasksection{{task.id}}'style="width:85%; height:150px">
+  <div class="hoohaw card-body" style="margin-left: -30px; margin-top:-7px;">
 
-    <div class="row ml-2" style="margin-top: -5px;">
-      <img src="{{url_for('static', filename='pfps/'+task.author.image_file)}}" class="ml-4" style="border: 2px solid lightgrey; border-radius:10%; width:40px; height: 40px;" alt="">
-    <h5 class="ml-1 mt-1"><a style="color:inherit; text-decoration:none;"href="{{url_for('account', account_id=task.author.id)}}">{{task.author.username}}</a></h5> <!-- .strftime('%I:%M %p %x') -->
-      </div>
-    <div class="row">
-
-    <ul style="list-style-type:none; display:flex; flex-direction: row;">
-      <li class="font-weight-normal"><a href="{{url_for('post', post_id=task.id)}}" style="color:inherit; text-decoration:none;">{{task.title}}</a></li>
-      <li class="font-weight-light ml-3" id='content{{task.id}}'>{{task.content}}</li>
-
-    </ul>
-    <span style="position:absolute;right: 20px;">
+    <div class="float-right mr-4 mt-1">
+    <span class=""style="position:absolute; ">
       <form class="" action="index.html" method="post">
-      {% if task.user_id == current_user.id %}
+      {% if account.id == current_user.id %}
       {% if task.content != "Completed" %}
 
     <a href="#" class='updatebutton ' id='button{{task.id}}' style="background: transparent;
   border: none !important; margin-top:-20px;"  task_id='{{task.id}}' name="button">
-      <img style="width:30px; margin-top:-10px;" id='buttonimg{{task.id}}' src="https://static.thenounproject.com/png/21729-200.png">
+      <img style="width:25px; margin-top:-10px;" id='buttonimg{{task.id}}' src="{{url_for('static', filename='assets/check.png')}}">
     </a>
 
 
       {% else %}
       <a href="#" class='updatebutton ' id='button{{task.id}}' style="background: transparent;
     border: none !important; margin-top:-20px;"  task_id='{{task.id}}' name="button">
-        <img style="width:30px; margin-top:-10px;" id='buttonimg{{task.id}}' src="{{url_for('static', filename='assets/x.png')}}">
+        <img style="width:25px; margin-top:-10px;" id='buttonimg{{task.id}}' src="{{url_for('static', filename='assets/x.png')}}">
       </a>
       {% endif %}
       {% endif %}
       </form>
     </span>
+  </div>
+
+
+    <div class="row ml-2" style="margin-top: -5px;">
+      <img src="{{url_for('static', filename='pfps/'+task.author.image_file)}}" class="ml-4" style="border: 2px solid lightgrey; border-radius:10%; width:40px; height: 40px;" alt="">
+      <h5 class="ml-1"><a style="font-size: 14pt;color:inherit; text-decoration:none; font-family: Calibri;"href="{{url_for('account', account_id=task.author.id)}}">{{task.author.username}}</a></h5> <!-- .strftime('%I:%M %p %x') -->
+
+      </div>
+      <p class="text-muted float-left" style="font-size:10pt; margin-top:-20px; margin-left:75px; ">{{mytasklocaltimes[mytasks.index(task)].strftime('%I:%M %p %x')}}</p>
+
+    <div class="row float-right ">
+
+          <div class="float-right mt-1 mr-4">
+
+    </div>
+
+
+    </div>
+    <div class="row float-left">
+
+    <ul class=""style="margin-left:-10px; list-style-type:none; display:flex; flex-direction: row;">
+      <li style="height:30px; width:330px;"class="font-weight-light">
+        <p style="line-height:100%;" class="mr-2">
+        <a href="{{url_for('post', post_id=task.id)}}" style="font-size:12pt; color:inherit; text-decoration:none;">
+          {{task.title}}
+        </a>
+      </p>
+      </li>
+    <!--  <li class="font-weight-light ml-3"  id='content{{task.id}}'>{{task.content}}</li>
+-->
+    </ul>
+
   </div>
 
 

@@ -26,6 +26,7 @@ def datetime_from_utc_to_local(utc_datetime):
 def home():
     title = 'Hello'
     localtimes = []
+    mytasklocaltimes = []
     if current_user.is_authenticated:
         title = 'Wacky Schemes'
         tasks=Post.query.filter(Post.user_id != current_user.id).all()
@@ -39,7 +40,7 @@ def home():
             localtimes.append(datetime_from_utc_to_local(task.date_posted))
     if mytasks:
         for task in mytasks:
-            localtimes.append(datetime_from_utc_to_local(task.date_posted))
+            mytasklocaltimes.append(datetime_from_utc_to_local(task.date_posted))
 
     comment = CommentForm()
     form = CreateTask()
@@ -53,7 +54,7 @@ def home():
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('home'))
-    return render_template('home.html', title=title, tasks=tasks,mytasks=mytasks, form=form,comment=comment, localtimes=localtimes)
+    return render_template('home.html', title=title, account=current_user, tasks=tasks, mytasklocaltimes=mytasklocaltimes,mytasks=mytasks, form=form,comment=comment, localtimes=localtimes)
 
 @app.route('/register', methods=['GET','POST'])
 def register():
@@ -184,4 +185,4 @@ def account(account_id):
         form.username.data = account.username
         form.email.data = account.email
     image_file = url_for('static', filename='pfps/'+current_user.image_file)
-    return render_template('account.html', title=account.username+"'s tasks", image_file=image_file, account=account, localtimes=localtimes, form=form, tasks=tasks)
+    return render_template('account.html', title=account.username+"'s tasks", image_file=image_file, account=account, localtimes=localtimes, form=form, mytasks=tasks)

@@ -1,5 +1,13 @@
 {% extends 'layout.html' %}
 {% block content %}
+  <style media="screen">
+      #accountposts::-webkit-scrollbar { width: 0 !important }
+      .leftlist {
+        margin-left:20px;
+      }
+
+  </style>
+
 <div class="card bg-light">
 <div class="content-section ml-5 mt-3 mr-5">
   <div class="card bg-dark mb-3">
@@ -16,93 +24,79 @@
 </div>
 <div class="row">
   {% if account.id == current_user.id %}
-<div class="card bg-info mb-4" style="width:50%;">
+  <div class="card ml-5" style="height:450px; margin-right:-30px;">
+    <legend class="ml-3 mt-2">
+      <a style="text-decoration:none; color:inherit;" href="{{url_for('account', account_id=current_user.id)}}">
+       My Tasks
+     </a>
+     </legend>
+    <span class="border-bottom ml-2 mr-2"></span>
 
-  <form class="form-group ml-3 mt-3 mr-3" action="" enctype="multipart/form-data" method="post">
-    {{form.hidden_tag()}}
-    <fieldset class="form-group">
-      <div class="form-group">
-
-      <legend class="border-bottom">Update</legend>
-      <div class="form-group">
-        <div class="row ml-3">
-          {{form.username.label(class="form-control-label")}}
-        </div>
-          {%if form.username.errors%}
-          {{form.username(class="form-control form-control is-invalid")}}
-          <div class="invalid-feedback">
-            {%for error in form.username.errors%}
-              <span>{{error}}</span>
-            {%endfor%}
-          </div>
-          {%else%}
-        {{form.username(class="form-control-label form-control-lg")}}
-
-        {%endif%}
-
-      </div>
-      <div class="form-group">
-
-      <div class="row ml-3">
-        {{form.email.label(class="form-control-label")}}
-      </div>
-      {%if form.email.errors%}
-        {{form.email(class="form-control form-control is-invalid")}}
-        <div class="invalid-feedback">
-          {%for error in form.email.errors%}
-            <span>{{error}}</span>
-          {%endfor%}
-        </div>
-        {%else%}
-      {{form.email(class="form-control-label form-control-lg")}}
-
-      {%endif%}
-
-    </div>
-
-    <div class="form-group">
-      {{ form.picture.label()}}
-      {{ form.picture(class="form-control-file")}}
-      {% if form.picture.errors %}
-      {% for error in form.picture.errors %}
-        <span class="text-danger"> {{ error }}</span><br>
-      {% endfor %}
-      {% endif %}
-      </div>
-
-  <div class="form-group">
-    {{form.submit(class='btn btn-primary')}}
+    <div class="mr-4" style="margin-left:-75px; margin-right:20px;">
+      <ul id="accountposts"  style="list-style-type:none; width:450px;height:350px;overflow-x:hidden;">
+    {% if current_user.is_authenticated %}
+    {%for task in mytasks | reverse %}
+    {% if task.content != 'Completed' %}
+    {% include 'mainpageaccountpost.html' %}
+    {% endif %}
+    {%endfor%}
+    {%for task in mytasks | reverse %}
+    {% if task.content == 'Completed' %}
+    {% include 'mainpageaccountpost.html' %}
+    {% endif %}
+    {%endfor%}
+    {% endif %}
+  </ul>
+{% endif %}
   </div>
+  </div>
+  {% if account.id != current_user.id %}
+  <div class="row ml-1">
 
-    </fieldset>
-  </form>
+  <div class="card ml-5 mb-5 mr-5" style="width: 450px;height:450px; margin-right:0px;">
+    <legend class="ml-3 mt-2">
+      <a style="text-decoration:none; color:inherit;" href="{{url_for('account', account_id=current_user.id)}}">
+       {{account.username}}'s Active Tasks
+     </a>
+     </legend>
+    <span class="border-bottom ml-2 mr-2"></span>
+
+    <div class="mr-4" style="margin-left:-75px; margin-right:20px;">
+      <ul id="accountposts"  style="list-style-type:none; width:500px;height:350px;overflow-x:hidden;">
+    {% if current_user.is_authenticated %}
+    {%for task in mytasks | reverse %}
+    {% if task.content != 'Completed' %}
+    {% include 'mainpageaccountpost.html' %}
+    {% endif %}
+    {%endfor%}
+
+    {% endif %}
+  </ul>
+  </div>
+</div>
+<div class="card ml-5 mb-5" style="width: 450px;height:450px; margin-right:-30px;">
+  <legend class="ml-3 mt-2">
+    <a style="text-decoration:none; color:inherit;" href="{{url_for('account', account_id=current_user.id)}}">
+     {{account.username}}'s Completed Tasks
+   </a>
+   </legend>
+  <span class="border-bottom ml-2 mr-2"></span>
+
+  <div class="mr-4" style="margin-left:-75px; margin-right:20px;">
+    <ul id="accountposts"  style="list-style-type:none; width:500px;height:350px;overflow-x:hidden;">
+  {% if current_user.is_authenticated %}
+  {%for task in mytasks | reverse %}
+  {% if task.content == 'Completed' %}
+  {% include 'mainpageaccountpost.html' %}
+  {% endif %}
+  {%endfor%}
+
+  {% endif %}
+</ul>
+</div>
+</div>
 </div>
 {% endif %}
-  {% if account.id == current_user.id %}
-  <div class="card bg-success ml-5 mb-3" style="width:45%;">
-    <div class="title border-bottom ml-3 mr-3 mt-2 mb-2 text-right ">
-  {% else %}
-  <div class="card bg-success ml-3 mb-3" style="width:97%;">
-    <div class="title border-bottom ml-3 mr-3 mt-2 mb-2 text-left ">
-  {% endif %}
-
-
-      <legend>Tasks</legend>
-    </div>
-    {%for task in tasks| reverse %}
-    {% if task.content != 'Completed' %}
-    {% include 'accountpost.html' %}
-    {% endif %}
-    {%endfor%}
-    {%for task in tasks| reverse %}
-    {% if task.content == 'Completed' %}
-    {% include 'accountpost.html' %}
-    {% endif %}
-    {%endfor%}
-  </div>
-  </div>
-  </div>
-</div>
 
 <script src="{{url_for('static', filename='scripts/check.js')}}"></script>
 {% endblock content %}

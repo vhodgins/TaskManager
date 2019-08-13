@@ -1,7 +1,7 @@
 $(document).ready(function() {
-  $('.updatebutton').on('click', function(){
-
-
+  $('.updatebutton').on('click', function(event){
+    event.preventDefault();
+    
     var task_id = $(this).attr('task_id');
 
 

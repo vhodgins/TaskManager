@@ -21,7 +21,7 @@ class LoginForm(FlaskForm):
 
 
 class CreateTask(FlaskForm):
-    title = StringField('Title', validators=[DataRequired(), Length(max=100)])
+    title = TextAreaField('Title', validators=[DataRequired(), Length(max=100)])
 
     content = StringField('Content', validators=[])
 
@@ -42,7 +42,7 @@ class CommentForm(FlaskForm):
 
 
 class RegisterForm(FlaskForm):
-    username = StringField('username', validators=[DataRequired(), Length(min=2, max=20)])
+    username = StringField('username', validators=[DataRequired(), Length(min=1, max=15)])
 
     email = StringField('email', validators=[DataRequired(), Email()])
 
