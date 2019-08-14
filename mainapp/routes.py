@@ -149,6 +149,15 @@ def upvote():
         p.likes += 1
         l.value = 1
         db.session.commit()
+    elif request.form['lean'] == 'down2':
+        p.likes -= 2
+        l.value = -1
+        db.session.commit()
+    elif request.form['lean'] == 'up2':
+        p.likes += 2
+        l.value = 1
+        db.session.commit()
+
     else:
         l.value = -1
         p.likes -= 1
