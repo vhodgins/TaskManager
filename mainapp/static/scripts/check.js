@@ -28,8 +28,12 @@ $(document).ready(function() {
 
   });
 
+
+
+
   $('.upvotebutton').on('click', function(event){
     event.preventDefault();
+  //  var state = $(this).attr('state');
 
     var task_id = $(this).attr('task_id');
 
@@ -43,9 +47,16 @@ $(document).ready(function() {
 
 
     req.done(function(data) {
-
-      $('#like'+task_id).text(data.likes)
+      
+      $('#downvote'+task_id).attr('style', 'background-color:white; height:20px; width:20px; border-radius:50%; text-decoration:none;')
+        $('#upvote'+task_id).attr('style', 'background-color:green; height:20px; width:20px; border-radius:50%; text-decoration:none; color:green;')
+        $('#like'+task_id).text(data.likes)
     });
+
+
+
+
+
 
   });
 
@@ -64,7 +75,8 @@ $(document).ready(function() {
 
 
     req.done(function(data) {
-
+      $('#downvote'+task_id).attr('style', 'background-color:red; height:20px; width:20px; border-radius:50%; text-decoration:none; color:red;')
+      $('#upvote'+task_id).attr('style', 'background-color:white; height:20px; width:20px; border-radius:50%; text-decoration:none;')
       $('#like'+task_id).text(data.likes)
     });
 

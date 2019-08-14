@@ -1,28 +1,14 @@
-#Redesign Whole Website
+X Redesign Whole Website
 #Add Comments -> ajax
 #Add Followers list
-#Add likes - > ajax
+X Add likes - > ajax
 #Learn Flask-migrate - - > database management
-#Redesign Account page
+X Redesign Account page
 #Revamp task algorithm
 
 
+need to see if user has already voted on posts
+needs two columns for user
 
-<!-- Item Template -->
-<!--   Tasks
-{%for task in tasks | reverse %}
-{% if task.content != 'Completed' %}
-{% include 'singlepost.html' %}
-{% endif %}
-{%endfor%}
--->
-
-
-
-  <!-- Tasks Completed
-  {%for task in tasks | reverse %}
-  {% if task.content == 'Completed' %}
-  {% include 'singlepost.html' %}
-  {% endif %}
-  {%endfor%}
-  -->
+upvoted_posts = db.column
+downvoted_posts = db.column

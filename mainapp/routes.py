@@ -1,5 +1,5 @@
 #package folder, database classes
-from mainapp.models import User, Post, Comment
+from mainapp.models import User, Post, Comment, Likes
 #flask functions
 from flask import escape, render_template, request, url_for, flash, redirect, abort, jsonify
 #package folder, Forms
@@ -27,6 +27,7 @@ def home():
     title = 'Hello'
     localtimes = []
     mytasklocaltimes = []
+
     if current_user.is_authenticated:
         title = 'Wacky Schemes'
         tasks=Post.query.filter(Post.user_id != current_user.id).all()
@@ -45,6 +46,14 @@ def home():
     comment = CommentForm()
     form = CreateTask()
 
+    likes = {}
+    if tasks:
+        for task in tasks:
+            print(current_user.id)
+            #if  Likes.query.filter(Likes.user_id==current_user.id).filter(Likes.post_id==task.id).first():
+            likes.update({task.id : Likes.query.filter(Likes.user_id==current_user.id).filter(Likes.post_id==task.id).first()})
+
+
     if form.validate_on_submit():
         if not current_user.is_authenticated:
             flash(f'You must be logged in to do that')
@@ -53,7 +62,7 @@ def home():
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('home'))
-    return render_template('home.html', title=title, account=current_user, tasks=tasks, mytasklocaltimes=mytasklocaltimes, mytasks=mytasks, form=form,comment=comment, localtimes=localtimes)
+    return render_template('home.html', title=title, likes=likes, account=current_user, tasks=tasks, mytasklocaltimes=mytasklocaltimes, mytasks=mytasks, form=form,comment=comment, localtimes=localtimes)
 
 @app.route('/register', methods=['GET','POST'])
 def register():
@@ -128,10 +137,20 @@ def post(post_id):
 def upvote():
     tasknumber = request.form['id']
     p = Post.query.filter_by(id=tasknumber).first()
+    if Likes.query.filter(Likes.user_id==current_user.id).filter(Likes.post_id==int(tasknumber)).first():
+        pass
+    else:
+        q = Likes(post_id=tasknumber, user_id=current_user.id, value=1 if request.form['lean']=='hey' else 0)
+        db.session.add(q)
+        db.session.commit()
+    l = Likes.query.filter(Likes.user_id==current_user.id).filter(Likes.post_id==int(tasknumber)).first()
     if request.form['lean'] == 'hey':
+        print(p.likes)
         p.likes += 1
+        l.value = 1
         db.session.commit()
     else:
+        l.value = -1
         p.likes -= 1
         db.session.commit()
     likes = p.likes
@@ -180,6 +199,8 @@ def account(account_id):
     account = User.query.get_or_404(account_id)
     form = UpdateForm()
     tasks=Post.query.filter_by(user_id=account.id).all()
+
+
     localtimes = []
     if tasks:
         for task in tasks:
@@ -197,4 +218,4 @@ def account(account_id):
         form.username.data = account.username
         form.email.data = account.email
     image_file = url_for('static', filename='pfps/'+current_user.image_file)
-    return render_template('account.html', title=account.username+"'s tasks", image_file=image_file, account=account, localtimes=localtimes, form=form, mytasks=tasks)
+    return render_template('account.html', title=account.username+"'s tasks", image_file=image_file, account=account, mytasklocaltimes=localtimes, form=form, mytasks=tasks)
