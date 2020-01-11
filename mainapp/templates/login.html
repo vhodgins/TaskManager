@@ -1,7 +1,9 @@
 {%extends 'layout.html'%}
 {%block content%}
-<div class="content-section">
+<div class="container" style='height: 89.8vh'>
 
+<div id="loginbox" class="content-section card" >
+<div class="ml-4 mr-4">
 <form class="form-group" action="" method="post">
   {{form.hidden_tag()}}
   <fieldset class="form-group">
@@ -9,7 +11,8 @@
     <div class="form-group">
 
 
-    <div class="row ml-3">
+      <div class="" style="width:250px;">
+    <div class="row ml-1">
       {{form.email.label(class="form-control-label")}}
     </div>
     {%if form.email.errors%}
@@ -20,11 +23,13 @@
         {%endfor%}
       </div>
       {%else%}
-    {{form.email(class="form-control-label form-control-lg")}}
+    {{form.email(class="form-control-label form-control form-control-lg")}}
 
     {%endif%}
 
-  <div class="row ml-3">
+  </div>
+  <div class="" style="width:250px;">
+  <div class="row ml-1 mt-3">
     {{form.password.label(class="form-control-label")}}
   </div>
     {%if form.password.errors%}
@@ -35,9 +40,10 @@
       {%endfor%}
     </div>
     {%else%}
-  {{form.password(class="form-control-label form-control-lg")}}
+  {{form.password(class="form-control-label form-control form-control-lg")}}
 
   {%endif%}
+</div>
 
 <div class="form-group">
   {{form.remember}} <span>Remember me?</span>
@@ -51,4 +57,7 @@
 </form>
 
 </div>
+</div>
+</div>
+
 {%endblock content%}

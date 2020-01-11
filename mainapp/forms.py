@@ -11,9 +11,9 @@ class Check(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    email = StringField('email', validators=[DataRequired(), Email()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
 
-    password = PasswordField('password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
 
     remember = BooleanField('Remember Me')
 
@@ -42,13 +42,13 @@ class CommentForm(FlaskForm):
 
 
 class RegisterForm(FlaskForm):
-    username = StringField('username', validators=[DataRequired(), Length(min=1, max=15)])
+    username = StringField('Username', validators=[DataRequired(), Length(min=1, max=15)])
 
-    email = StringField('email', validators=[DataRequired(), Email()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
 
-    password = PasswordField('password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
 
-    passwordConf = PasswordField('passwordConf', validators=[EqualTo('password')])
+    passwordConf = PasswordField('Password Confirmation', validators=[EqualTo('password')])
 
     remember = BooleanField('Remember Me')
 

@@ -5,10 +5,3 @@ X Add likes - > ajax
 #Learn Flask-migrate - - > database management
 X Redesign Account page
 #Revamp task algorithm
-
-
-need to see if user has already voted on posts
-needs two columns for user
-
-upvoted_posts = db.column
-downvoted_posts = db.column

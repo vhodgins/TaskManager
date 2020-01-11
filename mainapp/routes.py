@@ -22,8 +22,10 @@ def datetime_from_utc_to_local(utc_datetime):
 
 
 @app.route('/', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def home():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
     title = 'Hello'
     localtimes = []
     mytasklocaltimes = []
@@ -36,8 +38,15 @@ def home():
         tasks = []
         mytasks=[]
 
+    tasklikes = {}
+
     if tasks:
         for task in tasks:
+            likecount = 0
+            likelist = Likes.query.filter(Likes.post_id==task.id).all()
+            for like in likelist:
+                likecount += like.value
+            tasklikes.update({task.id : likecount})
             localtimes.append(datetime_from_utc_to_local(task.date_posted))
     if mytasks:
         for task in mytasks:
@@ -49,10 +58,12 @@ def home():
     likes = {}
     if tasks:
         for task in tasks:
-            print(current_user.id)
+
             #if  Likes.query.filter(Likes.user_id==current_user.id).filter(Likes.post_id==task.id).first():
             likes.update({task.id : Likes.query.filter(Likes.user_id==current_user.id).filter(Likes.post_id==task.id).first()})
-
+    if mytasks:
+        for task in mytasks:
+            likes.update({task.id : Likes.query.filter(Likes.user_id==current_user.id).filter(Likes.post_id==task.id).first()})
 
     if form.validate_on_submit():
         if not current_user.is_authenticated:
@@ -62,7 +73,7 @@ def home():
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('home'))
-    return render_template('home.html', title=title, likes=likes, account=current_user, tasks=tasks, mytasklocaltimes=mytasklocaltimes, mytasks=mytasks, form=form,comment=comment, localtimes=localtimes)
+    return render_template('home.html', tasklikes=tasklikes, title=title, likes=likes, account=current_user, tasks=tasks, mytasklocaltimes=mytasklocaltimes, mytasks=mytasks, form=form,comment=comment, localtimes=localtimes)
 
 @app.route('/register', methods=['GET','POST'])
 def register():
@@ -78,6 +89,23 @@ def register():
         return redirect(url_for('home'))
     return render_template('register.html', title='register', form=form)
 
+
+@app.route('/newpost', methods=['GET','POST'])
+def newpost():
+    form = CreateTask()
+    if form.validate_on_submit():
+        if not current_user.is_authenticated:
+            flash(f'You must be logged in to do that')
+            return redirect(url_for('home'))
+        post = Post(title=form.title.data, content=form.content.data, user_id=current_user.id)
+        db.session.add(post)
+        db.session.commit()
+        return redirect(url_for('home'))
+    return render_template('newpost.html', form=form)
+
+
+
+
 @app.route('/login', methods=['GET','POST'])
 def login():
     if current_user.is_authenticated:
@@ -88,7 +116,7 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
-            flash(f'Logged In', 'success')
+            #flash(f'Logged In', 'success')
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
             flash(f'Woops, incorrect email or password', 'danger')
@@ -136,6 +164,9 @@ def post(post_id):
 @app.route('/upvote', methods=['GET','POST'])
 def upvote():
     tasknumber = request.form['id']
+    likecount = 0
+    likelist = Likes.query.filter(Likes.post_id==tasknumber).all()
+
     p = Post.query.filter_by(id=tasknumber).first()
     if Likes.query.filter(Likes.user_id==current_user.id).filter(Likes.post_id==int(tasknumber)).first():
         pass
@@ -145,7 +176,6 @@ def upvote():
         db.session.commit()
     l = Likes.query.filter(Likes.user_id==current_user.id).filter(Likes.post_id==int(tasknumber)).first()
     if request.form['lean'] == 'hey':
-        print(p.likes)
         p.likes += 1
         l.value = 1
         db.session.commit()
@@ -163,7 +193,10 @@ def upvote():
         p.likes -= 1
         db.session.commit()
     likes = p.likes
-    return jsonify({'result' : 'success', 'likes' : likes})
+    likelist = Likes.query.filter(Likes.post_id==tasknumber).all()
+    for like in likelist:
+        likecount += like.value
+    return jsonify({'result' : 'success', 'likes' : likecount })
 
 @app.route('/posts/<post_id>/update')
 @login_required
@@ -209,6 +242,12 @@ def account(account_id):
     form = UpdateForm()
     tasks=Post.query.filter_by(user_id=account.id).all()
 
+    likes = {}
+    if tasks:
+        for task in tasks:
+            #if  Likes.query.filter(Likes.user_id==current_user.id).filter(Likes.post_id==task.id).first():
+            likes.update({task.id : Likes.query.filter(Likes.user_id==current_user.id).filter(Likes.post_id==task.id).first()})
+
 
     localtimes = []
     if tasks:
@@ -227,4 +266,4 @@ def account(account_id):
         form.username.data = account.username
         form.email.data = account.email
     image_file = url_for('static', filename='pfps/'+current_user.image_file)
-    return render_template('account.html', title=account.username+"'s tasks", image_file=image_file, account=account, mytasklocaltimes=localtimes, form=form, mytasks=tasks)
+    return render_template('account.html', title=account.username+"'s tasks", likes=likes, image_file=image_file, account=account, mytasklocaltimes=localtimes, form=form, mytasks=tasks)

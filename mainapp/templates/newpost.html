@@ -1,0 +1,43 @@
+{% extends 'layout.html'%}
+{%block content%}
+<style>
+
+
+
+</style>
+<div class="container" style='height: 89.8vh'>
+<div id='maincontent' class="card bg-white" style=" margin: auto; margin-top: 100px;">
+  <h3 class="ml-4 mt-4 border-bottom">Make a Task</h3>
+<form class="" style="margin: 20px 20px 20px 50px" action="" method="post">
+  {{form.hidden_tag()}}
+
+
+  <li class="font-weight-normal" style="list-style-type: none;">
+
+        {%if form.title.errors%}
+        {{form.title(maxlength="100", id="titlearea",class="form-control form-control is-invalid", placeholder="type something")}}
+        <div class="invalid-feedback">
+          {%for error in form.title.errors%}
+            <span>{{error}}</span>
+          {%endfor%}
+        {%else%}
+      {{form.title(maxlength="100", id="titlearea", class="form-control", placeholder="type something", style="height:130px; resize:none; margin-left:-20px;background: inherit;")}}
+
+      {%endif%}
+    </li>
+
+    <br>
+
+  <li class="" style="float:right; margin-right:20px; list-style-type: none;">
+    {{form.submit(class="btn btn-sm btn-outline-info")}}
+  </li>
+
+
+
+</form>
+
+
+</div>
+</div>
+
+{%endblock content%}

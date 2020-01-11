@@ -6,25 +6,75 @@
         margin-left:20px;
       }
 
+      html {
+        min-height: 100%;
+      }
+      body {
+        height: 740px;
+      }
+
+      .post {
+        margin-left: 0px;
+      }
+
+      #activepostcard {
+        height: 550px;
+      }
+
+      #activetasks {
+        margin-left: -75px;
+      }
+
+      #accountposts {
+        height: 480px;
+      }
+
+      #completedtasks {
+        visibility: visible;
+      }
+
+      #maincard {
+        height: 650px;
+      }
+
+      @media (max-width: 1200px) {
+        #completedtasks {
+          visibility: hidden;
+        }
+      }
+
+      @media (max-width: 580px) {
+
+        #accountposts {
+          height:480px;
+        }
+        #activepostcard {
+          height: 550px;
+        }
+        #activetasks {
+          margin-left: -87px;
+        }
+
+      }
   </style>
 
-<div class="card bg-light">
+<div class="card bg-light" id="maincard" style="margin-top: 70px;">
 <div class="content-section ml-5 mt-3 mr-5">
-  <div class="card bg-dark mb-3">
+  <div class=" mb-2" style="margin-left: -30px; margin-right:50px; height: 60px;">
     <div class="m-2">
 
   <div class="media">
-    <img class="" style="border: 2px white solid; border-radius:50%; height:100px;width:100px;"src="{{url_for('static' ,filename='pfps/'+account.image_file)}}">
-    <div class="media-body ml-5">
-      <h2 class="account-heading text-info">{{account.username}}</h2>
-      <p class="text-secondary">{{account.email}}</p>
+    <!--<img class="" style="margin-top:-5px; border: 2px white solid; border-radius:10%; height:50px;width:50px;"src="{{url_for('static' ,filename='pfps/'+account.image_file)}}">
+    --><div class="media-body ml-2">
+      <h2 class="" style="margin-top: 4px; font-weight: 200; font-family: Calibri;  font-size: 20pt;"> <i> {{account.username}}'s tasks </i></h2>
+
     </div>
   </div>
 </div>
 </div>
 <div class="row">
   {% if account.id == current_user.id %}
-  <div class="card ml-5" style="height:450px; margin-right:-30px;">
+  <div class="card" style="height:450px; margin-right:0px;">
     <legend class="ml-3 mt-2">
       <a style="text-decoration:none; color:inherit;" href="{{url_for('account', account_id=current_user.id)}}">
        My Tasks
@@ -51,9 +101,9 @@
   </div>
   </div>
   {% if account.id != current_user.id %}
-  <div class="row ml-1">
+  <div class="row">
 
-  <div class="card ml-5 mb-5 mr-5" style="width: 450px;height:450px; margin-right:0px;">
+  <div class="card  mb-5" id="activepostcard"style="width: 420px; margin:auto;">
     <legend class="ml-3 mt-2">
       <a style="text-decoration:none; color:inherit;" href="{{url_for('account', account_id=current_user.id)}}">
        {{account.username}}'s Active Tasks
@@ -61,8 +111,8 @@
      </legend>
     <span class="border-bottom ml-2 mr-2"></span>
 
-    <div class="mr-4" style="margin-left:-75px; margin-right:20px;">
-      <ul id="accountposts"  style="list-style-type:none; width:500px;height:350px;overflow-x:hidden;">
+    <div class="mr-4" id="activetasks" style="margin-right:0px;">
+      <ul id="accountposts"  style="list-style-type:none; width:500px;overflow-x:hidden;">
     {% if current_user.is_authenticated %}
     {%for task in mytasks | reverse %}
     {% if task.content != 'Completed' %}
@@ -74,7 +124,7 @@
   </ul>
   </div>
 </div>
-<div class="card ml-5 mb-5" style="width: 450px;height:450px; margin-right:-30px;">
+<div class="card mb-5" id="completedtasks" style="width: 450px;height:450px; margin-right: 90px;">
   <legend class="ml-3 mt-2">
     <a style="text-decoration:none; color:inherit;" href="{{url_for('account', account_id=current_user.id)}}">
      {{account.username}}'s Completed Tasks

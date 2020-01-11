@@ -1,5 +1,5 @@
 
-<div class="card ml-2 bg-light mb-4" id='tasksection{{task.id}}'style="width:100%; height:150px">
+<div class="card ml-2 bg-light mb-4 post " id='tasksection{{task.id}}'style=" width:100%; ">
   <div class="card-body" style="margin-left: -30px; margin-top:-7px;">
     <div class="row ml-2" style="margin-top: -5px;">
       <img src="{{url_for('static', filename='pfps/'+task.author.image_file)}}" class="ml-4" style="border: 2px solid lightgrey; border-radius:10%; width:40px; height: 40px;" alt="">
@@ -13,22 +13,21 @@
 
     <div class="row float-left" style="margin-top:-10px;">
       <ul class=""style="margin-left:-10px; list-style-type:none; display:flex; flex-direction: row;">
-        <li style="height:30px; width:440px;"class="font-weight-normal">
-          <p style="font-size:11pt;" class="font-weight-light">
-          <a href="{{url_for('post', post_id=task.id)}}" style="color:inherit; text-decoration:none;">
+        <li style="height:50px; width:440px;"class="font-weight-normal">
+          <p style="font-size:11pt; " class="posttext font-weight-light">
+          <a class="" href="{{url_for('post', post_id=task.id)}}" style=" color:inherit; text-decoration:none;">
             {{task.title}}
           </a>
           </p>
         </li>
 
 
-        <!--<li class="font-weight-light ml-3" id='content{{task.id}}'>{{task.content}}</li>
--->
+        <!--<li class="font-weight-light ml-3" id='content{{task.id}}'>{{task.content}}</li>-->
     </ul>
-    <ul style="position:absolute; right:20px; top:120px; list-style-type:none; display: flex; flex-direction:row">
+    <ul class='upvotebuttons'style="position:absolute;  right:20px;  list-style-type:none; display: flex; flex-direction:row">
       <li>
         <li>
-        <p class="mr-2" id="like{{task.id}}" style="margin-top:3px; font-size:10pt;">{{task.likes}}</p>
+        <p class="mr-2" id="like{{task.id}}" style="margin-top:3px; font-size:10pt;">{{tasklikes[task.id]}}<!--{{task.likes}}--></p>
       </li>
       {%if likes[task.id].value == 1 %}
       <li>
@@ -56,5 +55,7 @@
   </div>
 
 
+
   </div>
+
 </div>

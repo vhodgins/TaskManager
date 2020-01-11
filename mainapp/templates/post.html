@@ -2,9 +2,12 @@
 
 {% block content %}
 
+<div class="buffer" style=" height: 10.2vh"></div>
+
 
   {% if current_user.id==task.author.id %}
-<div class="card ml-3 bg-light mb-4" style="width:90%; height:100px">
+
+
   <div class="card-body" style="margin-left: -30px; margin-top:-7px;">
       <legend class="ml-4">Edit Post</legend>
     <div class="row">
@@ -51,38 +54,34 @@
   {% endif %}
   {% if current_user.id != task.author.id %}
 
-
-  <div id="tasks" class="mb-4">
-
-  <!-- Item Template -->
-  <div class="card ml-5 bg-light mb-4" style="width:90%; height:80px">
-    <div class="card-body" style="margin-left: -30px; margin-top:-7px;">
-      <div class="row ml-2" style="margin-top: -5px;">
-        <img src="{{url_for('static', filename='pfps/'+task.author.image_file)}}" class="ml-4" style="border: 2px solid white; border-radius:50%; width:40px; height: 40px;" alt="">
-      <h5 class="ml-1 mt-1"><a style="color:inherit; text-decoration:none;"href="{{url_for('account', account_id=task.author.id)}}">{{task.author.username}}</a></h5> <!-- .strftime('%I:%M %p %x') -->
-      <p class="text-muted ml-5" style="font-size:10pt; margin-top: 5px;">{{localtime.strftime('%I:%M %p %x')}}</p>
-    </div>
-      <div class="row">
-
-      <ul style="list-style-type:none; display:flex; flex-direction: row;">
-        <li class="font-weight-normal"><a href="{{url_for('post', post_id=task.id)}}" style="color:inherit; text-decoration:none;">{{task.title}}</a></li>
-        <li class="font-weight-light ml-3">{{task.content}}</li>
-      </ul>
-      <span style="position:absolute;right: 20px;"><button type="button" style=" margin-top:-15px;" class="mb-2 btn btn-outline-light" name="button">
-        <img src="https://static.thenounproject.com/png/21729-200.png"
-        width="23px;">
-
-      </button>
-      </span>
-    </div>
-
-    </div>
-  </div>
-
+  <div class="card">
+    <section style="display:flex; flex-direction:row; width:100%">
+      <img src="{{url_for('static', filename='pfps/'+task.author.image_file)}}"  class="ml-2 mt-2" style="width:50px; height:50px; border-radius:5px"alt="">
+      <h3 style="position:relative; top: 15px; left: 10px;">{{task.author.username}}</h3>
+      <p style="font-weight: 200;position:relative; top:25px; left:15px;">{{localtime.strftime('%I:%M %p %x')}}</p>
+      {% if task.content == "Completed" %}
+      <img style="position:absolute; right:20px; top: 15px" src="{{url_for('static', filename='assets/x.png')}}" width="23px;">
+      {% else %}
+      <img style="position:absolute; right:20px; top: 15px" src="{{url_for('static', filename='assets/check.png')}}" width="23px;">
+      {% endif %}
+    </section>
+    <section style="margin: 10px 20px 10px 20px">
+      {{task.title}}
+    </section>
 
   </div>
+
+
 
   {% endif %}
+
+
+  <div class="mt-4 card comments" style="width: 70%">
+    {% for comment in task.comments %}
+      {% include "comment_proto.html" %}
+    {% endfor %}
+  </div>
+
 
 
 {% endblock content %}
