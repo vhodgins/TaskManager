@@ -1,5 +1,5 @@
 #package folder, database classes
-from mainapp.models import User, Post, Comment, Likes
+from mainapp.models import User, Post, Comment, Likes, Dislikes
 #flask functions
 from flask import escape, render_template, request, url_for, flash, redirect, abort, jsonify
 #package folder, Forms
@@ -42,14 +42,14 @@ def home():
 
     if tasks:
         for task in tasks:
-            likecount = 0
-            likelist = Likes.query.filter(Likes.post_id==task.id).all()
-            for like in likelist:
-                likecount += like.value
+            #likelist = Likes.query.filter(Likes.post_id==task.id).all()
+            likecount = len(Likes.query.filter_by(user_id=current_user.id, post_id=task.id).all()) - len(Dislikes.query.filter_by(user_id=current_user.id, post_id=task.id).all())
             tasklikes.update({task.id : likecount})
             localtimes.append(datetime_from_utc_to_local(task.date_posted))
     if mytasks:
         for task in mytasks:
+            likecount = len(Likes.query.filter_by(user_id=current_user.id, post_id=task.id).all()) - len(Dislikes.query.filter_by(user_id=current_user.id, post_id=task.id).all())
+            tasklikes.update({task.id : likecount})
             mytasklocaltimes.append(datetime_from_utc_to_local(task.date_posted))
 
     comment = CommentForm()
@@ -58,12 +58,21 @@ def home():
     likes = {}
     if tasks:
         for task in tasks:
+            if Likes.query.filter(Likes.user_id==current_user.id).filter(Likes.post_id==task.id).first():
+                likes.update({task.id : 1})
+            elif Dislikes.query.filter(Dislikes.user_id==current_user.id).filter(Dislikes.post_id==task.id).first():
+                likes.update({task.id :-1})
+            else:
+                likes.update({task.id : 0})
 
-            #if  Likes.query.filter(Likes.user_id==current_user.id).filter(Likes.post_id==task.id).first():
-            likes.update({task.id : Likes.query.filter(Likes.user_id==current_user.id).filter(Likes.post_id==task.id).first()})
     if mytasks:
         for task in mytasks:
-            likes.update({task.id : Likes.query.filter(Likes.user_id==current_user.id).filter(Likes.post_id==task.id).first()})
+            if Likes.query.filter(Likes.user_id==current_user.id).filter(Likes.post_id==task.id).first():
+                likes.update({task.id : 1})
+            elif Dislikes.query.filter(Dislikes.user_id==current_user.id).filter(Dislikes.post_id==task.id).first():
+                likes.update({task.id :-1})
+            else:
+                likes.update({task.id : 0})
 
     if form.validate_on_submit():
         if not current_user.is_authenticated:
@@ -163,39 +172,25 @@ def post(post_id):
 
 @app.route('/upvote', methods=['GET','POST'])
 def upvote():
-    tasknumber = request.form['id']
-    likecount = 0
-    likelist = Likes.query.filter(Likes.post_id==tasknumber).all()
-
-    p = Post.query.filter_by(id=tasknumber).first()
-    if Likes.query.filter(Likes.user_id==current_user.id).filter(Likes.post_id==int(tasknumber)).first():
-        pass
-    else:
-        q = Likes(post_id=tasknumber, user_id=current_user.id, value=1 if request.form['lean']=='hey' else 0)
-        db.session.add(q)
+    task = request.form['id']
+    if request.form['lean'] == 'pos':
+        if Dislikes.query.filter_by(user_id=current_user.id, post_id=task).first():
+            db.session.delete(Dislikes.query.filter_by(user_id=current_user.id, post_id=task).first())
+        db.session.add(Likes(user_id=current_user.id, post_id=task))
         db.session.commit()
-    l = Likes.query.filter(Likes.user_id==current_user.id).filter(Likes.post_id==int(tasknumber)).first()
-    if request.form['lean'] == 'hey':
-        p.likes += 1
-        l.value = 1
+    if request.form['lean'] == 'neg' :
+        if Likes.query.filter_by(user_id=current_user.id, post_id=task).first():
+            db.session.delete(Likes.query.filter_by(user_id=current_user.id, post_id=task).first())
+        db.session.add(Dislikes(user_id=current_user.id, post_id=task))
         db.session.commit()
-    elif request.form['lean'] == 'down2':
-        p.likes -= 2
-        l.value = -1
-        db.session.commit()
-    elif request.form['lean'] == 'up2':
-        p.likes += 2
-        l.value = 1
+    if request.form['lean'] == 'neutral' :
+        if Likes.query.filter_by(user_id=current_user.id, post_id=task).first():
+            db.session.delete(Likes.query.filter_by(user_id=current_user.id, post_id=task).first())
+        if Dislikes.query.filter_by(user_id=current_user.id, post_id=task).first():
+            db.session.delete(Dislikes.query.filter_by(user_id=current_user.id, post_id=task).first())
         db.session.commit()
 
-    else:
-        l.value = -1
-        p.likes -= 1
-        db.session.commit()
-    likes = p.likes
-    likelist = Likes.query.filter(Likes.post_id==tasknumber).all()
-    for like in likelist:
-        likecount += like.value
+    likecount = len(Likes.query.all()) - len(Dislikes.query.all())
     return jsonify({'result' : 'success', 'likes' : likecount })
 
 @app.route('/posts/<post_id>/update')
@@ -222,6 +217,7 @@ def updatepost(post_id):
 
 @app.route('/check_task', methods=['GET','POST'])
 def check_task():
+    print('works')
     task = Post.query.filter_by(id=request.form['id']).first()
     if task.content != 'Completed':
         task.content = 'Completed'

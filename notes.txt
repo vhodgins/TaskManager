@@ -1,0 +1,26 @@
+
+tasknumber = request.form['id']
+likecount = 0
+likelist = Likes.query.filter(Likes.post_id==tasknumber).all()
+
+p = Post.query.filter_by(id=tasknumber).first()
+if Likes.query.filter(Likes.user_id==current_user.id).filter(Likes.post_id==int(tasknumber)).first():
+    pass
+else:
+    q = Likes(post_id=tasknumber, user_id=current_user.id, value=1 if request.form['lean']=='hey' else 0)
+    db.session.add(q)
+    db.session.commit()
+l = Likes.query.filter(Likes.user_id==current_user.id).filter(Likes.post_id==int(tasknumber)).first()
+if request.form['lean'] == 'pos':
+    l.value = 1
+    db.session.commit()
+elif request.form['lean'] == 'neg':
+    l.value = -1
+    db.session.commit()
+else:
+    l.value = 0
+    db.session.commit()
+likes = p.likes
+likelist = Likes.query.filter(Likes.post_id==tasknumber).all()
+for like in likelist:
+    likecount += like.value

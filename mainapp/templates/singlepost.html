@@ -29,14 +29,14 @@
         <li>
         <p class="mr-2" id="like{{task.id}}" style="margin-top:3px; font-size:10pt;">{{tasklikes[task.id]}}<!--{{task.likes}}--></p>
       </li>
-      {%if likes[task.id].value == 1 %}
+      {%if likes[task.id] == 1 %}
       <li>
         <a href="#" class="mr-1 btn btn-outline-success btn-sm upvotebutton" value="1" id="upvote{{task.id}}" task_id="{{task.id}}" style="background-color:green; height:20px; width:20px; border-radius:50%; text-decoration:none; color:green;" ></a>
       </li>
       <li>
         <a href="#" class="downvotebutton btn btn-sm btn-outline-danger" value="0" id="downvote{{task.id}}" task_id="{{task.id}}" style="height:20px; width:20px; border-radius:50%; text-decoration: none; color: red" ></a>
       </li>
-      {% elif likes[task.id].value == -1 %}
+      {% elif likes[task.id] == -1 %}
       <li>
         <a href="#" class="mr-1 btn btn-outline-success btn-sm upvotebutton" value="0" id="upvote{{task.id}}" task_id="{{task.id}}" style="height:20px; width:20px; border-radius:50%; text-decoration:none; color:green;" ></a>
       </li>

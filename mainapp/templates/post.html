@@ -2,54 +2,65 @@
 
 {% block content %}
 
+<style media="screen">
+  #titlearea {
+    overflow:hidden;
+  }
+
+  #titlearea:focus {
+  animation-name: postarea-expand;
+  animation-duration:100ms;
+  animation-fill-mode: forwards;
+  }
+
+  @keyframes postarea-expand {
+        0% {
+          height:80px;
+        }
+        100%{
+          height: 200px;
+        }
+  }
+</style>
+
+
+
 <div class="buffer" style=" height: 10.2vh"></div>
 
 
   {% if current_user.id==task.author.id %}
 
 
-  <div class="card-body" style="margin-left: -30px; margin-top:-7px;">
-      <legend class="ml-4">Edit Post</legend>
-    <div class="row">
-
-    <ul style="list-style-type:none; display:flex; flex-direction: row;">
-
-    <form class="" action="" method="post">
-      {{form.hidden_tag()}}
-      <div class="row ml-2">
-
-      <li class="font-weight-normal">
-
+  <div class="card">
+    <h2 class="mt-2 ml-5 mb-1"><i style="font-weight:200">Edit Post</i></h2>
+    <section style="display:flex; flex-direction:row;">
+      <form class="mt-2 ml-5 mb-5" style="display:flex; flex-direction:row;" action="" method="post">
+            {{form.hidden_tag()}}
             {%if form.title.errors%}
             {{form.title(class="form-control form-control is-invalid")}}
             <div class="invalid-feedback">
               {%for error in form.title.errors%}
                 <span>{{error}}</span>
               {%endfor%}
+              </div>
             {%else%}
-          {{form.title(class="", style="background: inherit;")}}
+              {{form.title(class="form-control", id="titlearea", style="width: 400px;background: inherit;")}}
+              {%endif%}
+            {{form.submit(class="ml-3 btn btn-sm btn-outline-info" , style="height: 50px;")}}
+      </form>
 
-          {%endif%}
-        </li>
-
-
-      <li class="ml-5">
-        {{form.submit(class="btn btn-sm btn-outline-info")}}
-      </li>
-
-
-    </div>
-    </form>
-    </ul>
-    <span style="position:absolute;right: 20px;"><button type="button" style=" margin-top:-8px;" class="mb-2 btn btn-outline-light" name="button">
-      <img src="https://static.thenounproject.com/png/21729-200.png"
-      width="23px;">
-
-    </button>
-    </span>
+      {% if task.content != "Completed" %}
+    <a href="#" class='updatebutton ' id='button{{task.id}}' style="background: transparent;  border: none !important; margin-top:-20px;"  task_id='{{task.id}}' name="button">
+      <img style="width:25px; position:absolute; top:20px; right: 20px;" id='buttonimg{{task.id}}' src="{{url_for('static', filename='assets/check.png')}}">
+    </a>
+      {% else %}
+      <a href="#" class='updatebutton ' id='button{{task.id}}' style="background: transparent; border: none !important; margin-top:-20px;"  task_id='{{task.id}}' name="button">
+        <img style="width:25px; position:absolute; top:20px; right: 20px;" id='buttonimg{{task.id}}' src="{{url_for('static', filename='assets/x.png')}}">
+      </a>
+      {% endif %}
+  </section>
 
 
-  </div>
 </div>
   {% endif %}
   {% if current_user.id != task.author.id %}
@@ -82,6 +93,6 @@
     {% endfor %}
   </div>
 
-
+<script src="{{url_for('static', filename='scripts/check.js')}}"></script>
 
 {% endblock content %}
