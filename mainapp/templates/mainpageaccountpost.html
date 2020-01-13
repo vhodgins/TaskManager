@@ -1,65 +1,47 @@
 
-<li class="leftlist">
-<div class="card bg-light mb-4 post mypost" id='tasksection{{task.id}}'style="width:85%;  ">
-  <div class="hoohaw card-body" style="margin-left: -30px; margin-top:-7px;">
-
-    <div class="float-right mr-4 mt-1">
-    <span class=""style="position:absolute; ">
-      <form class="" action="index.html" method="post">
-      {% if account.id == current_user.id %}
-      {% if task.content != "Completed" %}
-
-    <a href="#" class='updatebutton ' id='button{{task.id}}' style="background: transparent;
-  border: none !important; margin-top:-20px;"  task_id='{{task.id}}' name="button">
-      <img style="width:25px; margin-top:-10px;" id='buttonimg{{task.id}}' src="{{url_for('static', filename='assets/check.png')}}">
-    </a>
 
 
-      {% else %}
-      <a href="#" class='updatebutton ' id='button{{task.id}}' style="background: transparent;
-    border: none !important; margin-top:-20px;"  task_id='{{task.id}}' name="button">
-        <img style="width:25px; margin-top:-10px;" id='buttonimg{{task.id}}' src="{{url_for('static', filename='assets/x.png')}}">
+<li class="leftlist mb-1">
+<div class="card bg-light" id='tasksection{{task.id}}'style="  ">
+
+    <div class=" mt-2 ml-2 " style="">
+
+
+      <div class="" style="display:flex; flex-direction:row;">
+
+      <div class="mr-4 bg-info" style="">
+        {% if account.id == current_user.id %}
+        {% if task.content != "Completed" %}
+
+      <a href="#" class='updatebutton' id='button{{task.id}}' style=" background: transparent;
+    border: none !important; "  task_id='{{task.id}}' name="button">
+        <img style="width:25px;" id='buttonimg{{task.id}}' src="{{url_for('static', filename='assets/check.png')}}">
       </a>
-      {% endif %}
-      {% endif %}
-      </form>
-    </span>
-  </div>
 
 
-    <div class="row ml-2" style="margin-top: -5px;">
-      <img src="{{url_for('static', filename='pfps/'+task.author.image_file)}}" class="ml-4" style="border: 2px solid lightgrey; border-radius:10%; width:40px; height: 40px;" alt="">
-      <h5 class="ml-1"><a style="font-size: 14pt;color:inherit; text-decoration:none; font-family: Calibri;"href="{{url_for('account', account_id=task.author.id)}}">{{task.author.username}}</a></h5> <!-- .strftime('%I:%M %p %x') -->
-
+        {% else %}
+        <a href="#" class='updatebutton ' id='button{{task.id}}' style="background: transparent;
+      border: none !important; "  task_id='{{task.id}}' name="button">
+          <img style="width:25px; " id='buttonimg{{task.id}}' src="{{url_for('static', filename='assets/x.png')}}">
+        </a>
+        {% endif %}
+        {% endif %}
       </div>
-      <p class="text-muted float-left" style="font-size:10pt; margin-top:-20px; margin-left:75px; ">{{mytasklocaltimes[mytasks.index(task)].strftime('%I:%M %p %x')}}</p>
-
-    <div class="row float-right ">
-
-          <div class="float-right mt-1 mr-4">
-
-    </div>
 
 
-    </div>
-    <div class="row float-left">
-
-    <ul class=""style="margin-left:-10px; list-style-type:none; display:flex; flex-direction: row;">
-      <li style=""class="list-text font-weight-light">
-        <p style="line-height:100%;" class="mr-2">
+      <section style="width:360px; margin-left:20px;">
         <a href="{{url_for('post', post_id=task.id)}}" style="font-size:12pt; color:inherit; text-decoration:none;">
           {{task.title}}
         </a>
-      </p>
-      </li>
-    <!--  <li class="font-weight-light ml-3"  id='content{{task.id}}'>{{task.content}}</li>
--->
-    </ul>
+      </section>
 
-    <ul id="mytaskslist" style=" position:absolute; right:20px; list-style-type:none; display: flex; flex-direction:row">
+
+      </div>
+
+      <!--  <ul id="mytaskslist" class="float-right mr-2 "style=" list-style-type:none; display: flex; flex-direction:row">
       <li>
         <li>
-        <p class="mr-2" id="like{{task.id}}" style="margin-top:3px; font-size:10pt;">{{tasklikes[task.id]}}</p>
+        <p class="mr-2" id="like{{task.id}}" style=" font-size:10pt;">{{tasklikes[task.id]}}</p>
       </li>
       {%if likes[task.id] == 1 %}
       <li>
@@ -82,11 +64,24 @@
       <li>
         <a href="#" class="downvotebutton btn btn-sm btn-outline-danger" value="0" id="downvote{{task.id}}" task_id="{{task.id}}" style="height:20px; width:20px; border-radius:50%; text-decoration: none; color: red" ></a>
       </li>
-      {% endif %}
-    </ul>
-  </div>
+      {% endif %}</ul>-->
+
+        <div class="">
+          <p class="text-muted float-right mr-2" style="font-size:10pt;">{{mytasklocaltimes[mytasks.index(task)].strftime('%I:%M %p %x')}}</p>
+        </div>
 
 
-  </div>
+
+
+
+    <!--  <li class="font-weight-light ml-3"  id='content{{task.id}}'>{{task.content}}</li>
+-->
+
+
+
+
+
+
+</div>
 </div>
 </li>

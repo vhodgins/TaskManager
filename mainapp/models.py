@@ -17,10 +17,19 @@ class User(db.Model, UserMixin):
     posts = db.relationship('Post', backref='author', lazy=True)
     likes = db.relationship('Likes', backref='liker', lazy=True)
     comments = db.relationship('Comment', backref='commentor', lazy=True)
+    friends = db.relationship('Friends', backref='root_friend', lazy=True)
 
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+
+class Friends(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    friend_id = db.Column(db.Integer)
+
+    def __repr__(self):
+        return f"User('{self.friend.username}')"
 
 
 
@@ -53,7 +62,6 @@ class Comment(db.Model):
 
     def __repr__(self):
         return f"Comment('{self.content}', '{self.date_posted}')"
-
 
 
 class Post(db.Model):

@@ -1,6 +1,18 @@
 .card-body ul li {
   margin-left: 10px;
 }
+
+.updatebutton {
+
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+  position: absolute;
+  top: 50%;
+  left: 20px;
+
+}
+
+
 span button img:hover {
   animation-name: rotate;
   animation-duration: 200ms;
@@ -30,7 +42,7 @@ span button img:hover {
   }
 
   #maincontent {
-    margin-left: 600px;
+    margin-left: 500px;
     margin-top: 5%;
     margin-bottom: 5%;
 
@@ -41,7 +53,7 @@ span button img:hover {
   }
 
 #mytaskslist {
-top: 130px;
+top: 150px;
 }
 
   @keyframes postarea-expand {
@@ -62,16 +74,15 @@ top: 130px;
 
   }
   .list-text {
-    width: 330px;
-    height: 30px;
+
   }
 
   .post {
-    height:170px;
+    height:185px;
   }
 
   .upvotebuttons {
-    top: 120px;
+    top: 140px;
   }
 
 
@@ -79,13 +90,10 @@ top: 130px;
 #mytaskslist {
   top: 155px;
 }
-.list-text {
-  width: 270px;
-  height: 50px;
-}
+
 
 .mypost {
-height: 190px;
+
 }
 
 }

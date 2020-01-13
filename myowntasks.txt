@@ -6,5 +6,4 @@ X #Learn Flask-migrate - - > database management
 X Redesign Account page
 #Revamp task algorithm
 #Add tutorial
-
-to increase efficiency in likes, add a like and a dislike column to the post table
+#Add Deadline

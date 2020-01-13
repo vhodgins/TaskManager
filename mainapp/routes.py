@@ -43,12 +43,12 @@ def home():
     if tasks:
         for task in tasks:
             #likelist = Likes.query.filter(Likes.post_id==task.id).all()
-            likecount = len(Likes.query.filter_by(user_id=current_user.id, post_id=task.id).all()) - len(Dislikes.query.filter_by(user_id=current_user.id, post_id=task.id).all())
+            likecount = len(Likes.query.filter_by(post_id=task.id).all()) - len(Dislikes.query.filter_by(post_id=task.id).all())
             tasklikes.update({task.id : likecount})
             localtimes.append(datetime_from_utc_to_local(task.date_posted))
     if mytasks:
         for task in mytasks:
-            likecount = len(Likes.query.filter_by(user_id=current_user.id, post_id=task.id).all()) - len(Dislikes.query.filter_by(user_id=current_user.id, post_id=task.id).all())
+            likecount = len(Likes.query.filter_by(post_id=task.id).all()) - len(Dislikes.query.filter_by(post_id=task.id).all())
             tasklikes.update({task.id : likecount})
             mytasklocaltimes.append(datetime_from_utc_to_local(task.date_posted))
 
@@ -94,6 +94,10 @@ def register():
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(user)
         db.session.commit()
+        login_user(user, remember=form.remember.data)
+        next_page = request.args.get('next')
+        #flash(f'Logged In', 'success')
+        return redirect(next_page) if next_page else redirect(url_for('home'))
         flash(f'Account Created for {form.username.data}!', 'success')
         return redirect(url_for('home'))
     return render_template('register.html', title='register', form=form)
@@ -190,7 +194,7 @@ def upvote():
             db.session.delete(Dislikes.query.filter_by(user_id=current_user.id, post_id=task).first())
         db.session.commit()
 
-    likecount = len(Likes.query.all()) - len(Dislikes.query.all())
+    likecount = len(Likes.query.filter_by(post_id=task).all()) - len(Dislikes.query.filter_by(post_id=task).all())
     return jsonify({'result' : 'success', 'likes' : likecount })
 
 @app.route('/posts/<post_id>/update')
