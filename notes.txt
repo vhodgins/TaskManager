@@ -1,1 +1,33 @@
 <p class="text-muted float-left" style="font-size:10pt; margin-top:-10px;; margin-left:25px; ">{{mytasklocaltimes[mytasks.index(task)].strftime('%I:%M %p %x')}}</p>
+
+
+
+
+      {% if account.id == current_user.id %}
+      {% if task.content != "Completed" %}
+
+    <a href="#" class='updatebutton' id='button{{task.id}}' style="background: transparent;
+  border: none !important; "  task_id='{{task.id}}' name="button">
+      <img style="width:25px;" id='buttonimg{{task.id}}' src="{{url_for('static', filename='assets/check.png')}}">
+    </a>
+
+
+      {% else %}
+      <a href="#" class='updatebutton ' id='button{{task.id}}' style="background: transparent;
+    border: none !important; "  task_id='{{task.id}}' name="button">
+        <img style="width:25px; " id='buttonimg{{task.id}}' src="{{url_for('static', filename='assets/x.png')}}">
+      </a>
+      {% endif %}
+      {% endif %}
+
+
+
+
+
+
+
+        <p style="line-height:110%;" class="" >
+        <a href="{{url_for('post', post_id=task.id)}}" style="font-size:12pt; color:inherit; text-decoration:none;">
+          {{task.title}}
+        </a>
+      </p>
