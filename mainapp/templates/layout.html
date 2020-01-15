@@ -20,52 +20,62 @@
 
       body{
         height: 100vh;
-        background: linear-gradient(to bottom right, rgb(72, 75, 117), rgb(126, 210, 157));
+        background: rgba(46, 154, 24, 0.24) ;
       }
       .navbar-right {
         margin-right: 0px;
       }
 
 
+      nav div div div {
+        text-align: center;
+      }
 
+      .updatebutton {
+
+        -webkit-transform: translate(-50%,-50%);
+        transform: translate(-50%,-50%);
+        position: absolute;
+        top: 50%;
+        left: 20px;
+
+      }
+
+      p {
+        font-family: "Gill Sans MT", sans-serif;
+        font-weight: 200;
+      }
+
+      .task-title {
+        font-size: 12pt;
+      }
+      .task-author {
+        font-size: 14pt;
+      }
 
     </style>
     <title>{{title}}</title>
   </head>
   <body>
 
-  <nav class="fixed-top navbar navbar-expand-lg navbar-light" style="background-color:rgba(124, 230, 241, 0.4)">
-    <a class="navbar-brand" href="{{url_for('home')}}">Wacky Schemes</a>
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto mt-1">
-      {% if current_user.is_authenticated %}
-      <li class="nav-item active" style="">
-        <a class="nav-link navtext" href="{{url_for('newpost')}}">Post<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link navtext" href="{{url_for('logout')}}">Logout<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link navtext" href="{{url_for('account', account_id=current_user.id)}}">My Tasks<span class="sr-only">(current)</span></a>
-      </li>
-      {% else %}
-      <li class="nav-item active">
-        <a class="nav-link navtext" href="{{url_for('login')}}">Log In<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link navtext" href="{{url_for('register')}}">Register<span class="sr-only">(current)</span></a>
-      </li>
-      {% endif %}
-    <ul>
-
-
+  <nav class="fixed-top" style="background-color:rgba(46, 154, 24, 0.64)">
+    <div class="container">
+      <div class="row mt-3 mb-3">
+    <div class="col">
+      <h4><i>Taskyy</i></h4>
     </div>
+    <div class="col">
+      <form class="" action="index.html" method="post">
+        <input class="form-control" type="text" name="" value="" placeholder="Search">
+      </form>
+    </div>
+    <div class="col">
+      <h6><i>Account</i></h6>
+    </div>
+    </div>
+    <hr style="position:fixed; width:100vw; left:0px; top:54px; border: 2px solid rgb(43, 157, 51)">
   </nav>
+
     {% with messages = get_flashed_messages(with_categories=true) %}
       {%if messages%}
           {%for category, message in messages%}
