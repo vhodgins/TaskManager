@@ -29,39 +29,85 @@
 
 
   {% if current_user.id==task.author.id %}
+  <section>
+    <div class="card" id='tasksection{{task.id}}'style="background: white">
+
+        <div class=" mt-2 ml-2 " style="">
+
+          <div class="" style="display:flex; flex-direction:row;">
+
+          <div class="mr-4 bg-info" style="">
+            {% if account.id == current_user.id %}
+            {% if task.content != "Completed" %}
+
+          <a href="#" class='updatebutton' id='button{{task.id}}' style=" background: transparent;
+        border: none !important; "  task_id='{{task.id}}' name="button">
+            <img style="width:25px;" id='buttonimg{{task.id}}' src="{{url_for('static', filename='assets/check.png')}}">
+          </a>
 
 
-  <div class="card">
-    <h2 class="mt-2 ml-5 mb-1"><i style="font-weight:200">Edit Post</i></h2>
-    <section style="display:flex; flex-direction:row;">
-      <form class="mt-2 ml-5 mb-5" style="display:flex; flex-direction:row;" action="" method="post">
-            {{form.hidden_tag()}}
-            {%if form.title.errors%}
-            {{form.title(class="form-control form-control is-invalid")}}
-            <div class="invalid-feedback">
-              {%for error in form.title.errors%}
-                <span>{{error}}</span>
-              {%endfor%}
-              </div>
-            {%else%}
-              {{form.title(class="form-control", id="titlearea", style="width: 400px;background: inherit;")}}
-              {%endif%}
-            {{form.submit(class="ml-3 btn btn-sm btn-outline-info" , style="height: 50px;")}}
-      </form>
+            {% else %}
+            <a href="#" class='updatebutton ' id='button{{task.id}}' style="background: transparent;
+          border: none !important; "  task_id='{{task.id}}' name="button">
+              <img style="width:25px; " id='buttonimg{{task.id}}' src="{{url_for('static', filename='assets/x.png')}}">
+            </a>
+            {% endif %}
+            {% endif %}
+          </div>
 
-      {% if task.content != "Completed" %}
-    <a href="#" class='updatebutton ' id='button{{task.id}}' style="background: transparent;  border: none !important; margin-top:-20px;"  task_id='{{task.id}}' name="button">
-      <img style="width:25px; position:absolute; top:20px; right: 20px;" id='buttonimg{{task.id}}' src="{{url_for('static', filename='assets/check.png')}}">
-    </a>
-      {% else %}
-      <a href="#" class='updatebutton ' id='button{{task.id}}' style="background: transparent; border: none !important; margin-top:-20px;"  task_id='{{task.id}}' name="button">
-        <img style="width:25px; position:absolute; top:20px; right: 20px;" id='buttonimg{{task.id}}' src="{{url_for('static', filename='assets/x.png')}}">
-      </a>
-      {% endif %}
+
+
+          <section style="width:360px; margin-left:25px; margin-bottom: -30px; line-height:20px; margin-top:5px;">
+            <form class="mt-2" style="display:flex; flex-direction:row;" action="" method="post">
+                  {{form.hidden_tag()}}
+                  {%if form.title.errors%}
+                  {{form.title(class="form-control form-control is-invalid")}}
+                  <div class="invalid-feedback">
+                    {%for error in form.title.errors%}
+                      <span>{{error}}</span>
+                    {%endfor%}
+                    </div>
+                  {%else%}
+                    {{form.title(class="form-control", id="titlearea", style="resize: none;width: 400px;background: inherit;")}}
+                    {%endif%}
+                  {{form.submit(class="ml-3 btn btn-sm btn-outline-info" , style="height: 50px;")}}
+            </form>
+          </section>
+
+
+          </div>
+          <section>
+
+        </section>
+
+        <div style="">
+
+
+            <div style="float:right; margin-right: 10px;">
+              <a href="#"><img style="position: relative; top:22px; left: 70px; width:17px;"src="{{url_for('static', filename='assets/like.png')}}" alt=""></a>
+              <p class="" style="position:relative; left: 92px;font-size:12pt; font-weight:400; margin-bottom:0px;">{{task.likes}}</p>
+              <p class="text-muted" style=" font-size:10pt; margin-bottom:5px;">{{localtime.strftime('%I:%M %p %x')}}</p>
+            </div>
+
+
+          </div>
+
+
+
+
+
+        <!--  <li class="font-weight-light ml-3"  id='content{{task.id}}'>{{task.content}}</li>
+    -->
+
+
+
+
+
+
+    </div>
+    </div>
   </section>
 
-
-</div>
   {% endif %}
   {% if current_user.id != task.author.id %}
 

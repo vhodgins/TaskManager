@@ -126,7 +126,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        
+
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
@@ -172,7 +172,7 @@ def post(post_id):
     elif request.method == 'GET':
         form.title.data = post.title
         form.content.data = post.content
-    return render_template('post.html', form=form, task=post, title=post.title, localtime=localtime)
+    return render_template('post.html', form=form, account=current_user, task=post, title=post.title, localtime=localtime)
 
 
 @app.route('/upvote', methods=['GET','POST'])

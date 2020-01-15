@@ -33,10 +33,13 @@
         <p class="task-title"style="color:inherit; text-decoration:none;">
           {{task.title}}
         </p>
+
       </section>
     </a>
 
       </div>
+
+
       <section>
       <!--  <ul id="mytaskslist" class="float-right mr-2 "style=" list-style-type:none; display: flex; flex-direction:row">
       <li>
@@ -68,7 +71,9 @@
     </section>
 
     <div class="">
-
+      <div id="settings{{task.id}}" class="settings">
+        <a task_id="settings{{task.id}}"style="text-decoration:none; color:inherit; font-weight:500; font-size: 14pt"href="#">...</a>
+      </div>
 
         <div class="">
           <a href="#"><img style="width:17px;position:relative; left: 387px; top:23px;"src="{{url_for('static', filename='assets/like.png')}}" alt=""></a>
