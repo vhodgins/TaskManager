@@ -13,6 +13,7 @@ import os
 from PIL import Image
 import time
 from datetime import datetime
+import re
 
 
 def datetime_from_utc_to_local(utc_datetime):
@@ -222,7 +223,6 @@ def updatepost(post_id):
 
 @app.route('/check_task', methods=['GET','POST'])
 def check_task():
-    print('works')
     task = Post.query.filter_by(id=request.form['id']).first()
     if task.content != 'Completed':
         task.content = 'Completed'
@@ -268,3 +268,11 @@ def account(account_id):
         form.email.data = account.email
     image_file = url_for('static', filename='pfps/'+current_user.image_file)
     return render_template('account.html', title=account.username+"'s tasks", likes=likes, image_file=image_file, account=account, mytasklocaltimes=localtimes, form=form, mytasks=tasks)
+
+
+@app.route('/delete_post', methods=["GET", "POST"])
+def delete_post():
+    id = list(map(int, re.findall(r'\d+', request.form['id'])))[0]
+    db.session.delete(Post.query.filter_by(id=id).first())
+    db.session.commit()
+    return jsonify({'result' : 'success'})

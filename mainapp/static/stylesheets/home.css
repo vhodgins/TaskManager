@@ -83,6 +83,9 @@ top: 150px;
   top: 155px;
 }
 
+  #mobilehidden {
+    margin-top: 100px;
+  }
 
 .mypost {
 
@@ -91,7 +94,7 @@ top: 150px;
 }
 
 
-    @media (max-width: 1500px ) {
+    @media (max-width: 1300px ) {
       #mobilehidden {
   visibility: hidden;
   }
