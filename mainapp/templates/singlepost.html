@@ -1,4 +1,11 @@
-<div class="card" id='tasksection{{task.id}}'style="margin-bottom:10px; margin-left:2%; width:100%;background: linear-gradient(to bottom right, rgb(252, 252, 252),rgba(194, 51, 37, 0.02))">
+{% if task.content != 'Completed' %}
+<p class="description text-muted">{{task.author.username}} started a task</p>
+{% else %}
+<p class="description text-muted">{{task.author.username}} completed a task</p>
+{% endif %}
+
+
+<div class="card" id='tasksection{{task.id}}'style="margin-top:-15px; margin-bottom:20px; margin-left:2%; width:100%;background: linear-gradient(to bottom right, rgb(252, 252, 252),rgba(194, 51, 37, 0.02))">
 
     <div class=" mt-2 ml-2 " style="margin-bottom:30px;">
 
@@ -71,6 +78,12 @@
 
       </div>
 
+
+
+      <div  style="margin-bottom:-20px;"class="ml-4 comment-hidden" id="task_id{{task.id}}">
+          <a style="font-size:9pt; text-decoration:none;" class="make-comment" href="{{url_for('post', post_id=task.id)}}">View all {{(task.comments) | length}} Comments</a>
+
+      </div>
 
 
 

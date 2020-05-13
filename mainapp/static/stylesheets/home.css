@@ -22,7 +22,7 @@ span button img:hover {
 
     }
   }
-  #accountposts::-webkit-scrollbar { width: 0 !important }
+  
   #titlearea {
     overflow:hidden;
   }

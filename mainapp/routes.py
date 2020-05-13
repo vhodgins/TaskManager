@@ -165,6 +165,7 @@ def post(post_id):
     form = CreateTask()
     post = Post.query.get_or_404(post_id)
     localtime=datetime_from_utc_to_local(post.date_posted)
+    likes = len(Likes.query.filter_by(post_id=post.id).all()) - len(Dislikes.query.filter_by(post_id=post.id).all())
     if form.validate_on_submit():
         post.title = form.title.data
         post.content= form.content.data
@@ -173,7 +174,13 @@ def post(post_id):
     elif request.method == 'GET':
         form.title.data = post.title
         form.content.data = post.content
-    return render_template('post.html', form=form, account=current_user, task=post, title=post.title, localtime=localtime)
+    return render_template('post.html', form=form, likes=likes, account=current_user, task=post, title=post.title, localtime=localtime)
+
+
+@app.route('/search/<field_query>', methods=['GET', 'POST'])
+def search(field_query):
+    accounts = User.query.filter(User.username.contains(str(field_query))).all()
+    return render_template('search.html', accounts = accounts)
 
 
 @app.route('/upvote', methods=['GET','POST'])
@@ -274,5 +281,14 @@ def account(account_id):
 def delete_post():
     id = list(map(int, re.findall(r'\d+', request.form['id'])))[0]
     db.session.delete(Post.query.filter_by(id=id).first())
+    db.session.commit()
+    return jsonify({'result' : 'success'})
+
+
+
+@app.route('/make_comment', methods=["GET", "POST"])
+def make_comment():
+    c = Comment(user_id=current_user.id, content=request.form['content'], post=request.form['post'])
+    db.session.add(c)
     db.session.commit()
     return jsonify({'result' : 'success'})

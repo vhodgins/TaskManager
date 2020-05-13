@@ -21,6 +21,30 @@
           height: 200px;
         }
   }
+
+  ul {
+    list-style-type:none;
+    height: 500px;
+    overflow-x:hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 </style>
 
 
@@ -34,9 +58,9 @@
 
         <div class=" mt-2 ml-2 " style="">
 
-          <div class="" style="display:flex; flex-direction:row;">
+          <div class="" style="">
 
-          <div class="mr-4 bg-info" style="">
+          <div class="" style="float:right; margin-right:30px">
             {% if account.id == current_user.id %}
             {% if task.content != "Completed" %}
 
@@ -55,24 +79,16 @@
             {% endif %}
           </div>
 
-
-
+          <div class="">
+            <h4 class="ml-1">{{task.author.username}}</h4>
+          </div>
+          <div class="">
           <section style="width:360px; margin-left:25px; margin-bottom: -30px; line-height:20px; margin-top:5px;">
             <form class="mt-2" style="display:flex; flex-direction:row;" action="" method="post">
-                  {{form.hidden_tag()}}
-                  {%if form.title.errors%}
-                  {{form.title(class="form-control form-control is-invalid")}}
-                  <div class="invalid-feedback">
-                    {%for error in form.title.errors%}
-                      <span>{{error}}</span>
-                    {%endfor%}
-                    </div>
-                  {%else%}
-                    {{form.title(class="form-control", id="titlearea", style="resize: none;width: 400px;background: inherit;")}}
-                    {%endif%}
-                  {{form.submit(class="ml-3 btn btn-sm btn-outline-info" , style="height: 50px;")}}
+                  {{task.title}}
             </form>
           </section>
+        </div>
 
 
           </div>
@@ -113,18 +129,59 @@
 
   <div class="card">
     <section style="display:flex; flex-direction:row; width:100%">
-      <img src="{{url_for('static', filename='pfps/'+task.author.image_file)}}"  class="ml-2 mt-2" style="width:50px; height:50px; border-radius:5px"alt="">
-      <h3 style="position:relative; top: 15px; left: 10px;">{{task.author.username}}</h3>
-      <p style="font-weight: 200;position:relative; top:25px; left:15px;">{{localtime.strftime('%I:%M %p %x')}}</p>
+      <h3 style="position:relative; top: 15px; left: 15px;">{{task.author.username}}</h3>
+      <p style="font-weight: 200;position:relative; top:25px; left:25px;">{{localtime.strftime('%I:%M %p %x')}}</p>
       {% if task.content == "Completed" %}
       <img style="position:absolute; right:20px; top: 15px" src="{{url_for('static', filename='assets/x.png')}}" width="23px;">
       {% else %}
       <img style="position:absolute; right:20px; top: 15px" src="{{url_for('static', filename='assets/check.png')}}" width="23px;">
       {% endif %}
     </section>
-    <section style="margin: 10px 20px 10px 20px">
+    <section style="margin: 10px 20px 40px 20px">
       {{task.title}}
     </section>
+
+
+      <div class="" style="position: absolute; top:100%; right:5px; ">
+      <div class="" style="margin-top:-30px">
+      <ul class='upvotebuttons'style=" list-style-type:none; display: flex; flex-direction:row">
+        <li>
+
+        {%if likes == 1 %}
+        <li>
+          <a href="#" class="mr-1 btn btn-outline-success btn-sm upvotebutton" value="1" id="upvote{{task.id}}" task_id="{{task.id}}" style="background-color:green; height:20px; width:20px; border-radius:50%; text-decoration:none; color:green;" ></a>
+        </li>
+        <li style="width:25px;">
+        <p class="mr-1 ml-1" id="like{{task.id}}" style="margin-top:3px; font-size:11pt;">{{likes}}<!--{{task.likes}}--></p>
+      </li>
+        <li>
+          <a href="#" class="downvotebutton btn btn-sm btn-outline-danger" value="0" id="downvote{{task.id}}" task_id="{{task.id}}" style="height:20px; width:20px; border-radius:50%; text-decoration: none; color: red" ></a>
+        </li>
+        {% elif likes == -1 %}
+        <li>
+          <a href="#" class="mr-1 btn btn-outline-success btn-sm upvotebutton" value="0" id="upvote{{task.id}}" task_id="{{task.id}}" style="height:20px; width:20px; border-radius:50%; text-decoration:none; color:green;" ></a>
+        </li>
+        <li style="width:25px;">
+        <p class="mr-1 ml-1" id="like{{task.id}}" style="margin-top:3px; font-size:11pt;">{{likes}}<!--{{task.likes}}--></p>
+      </li>
+        <li>
+          <a href="#" class="downvotebutton btn btn-sm btn-outline-danger" value="-1" id="downvote{{task.id}}" task_id="{{task.id}}" style="background-color: red; height:20px; width:20px; border-radius:50%; text-decoration: none; color: red" ></a>
+        </li>
+        {% else %}
+        <li>
+          <a href="#" class="mr-1 btn btn-outline-success btn-sm upvotebutton" value="0" id="upvote{{task.id}}" task_id="{{task.id}}" style="height:20px; width:20px; border-radius:50%; text-decoration:none; color:green;" ></a>
+        </li>
+        <li style="width:25px;">
+        <p class="mr-1 ml-1" id="like{{task.id}}" style="margin-top:3px; font-size:11pt;">{{likes}}<!--{{task.likes}}--></p>
+      </li>
+        <li>
+          <a href="#" class="downvotebutton btn btn-sm btn-outline-danger" value="0" id="downvote{{task.id}}" task_id="{{task.id}}" style="height:20px; width:20px; border-radius:50%; text-decoration: none; color: red" ></a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+
+    </div>
 
   </div>
 
@@ -133,12 +190,28 @@
   {% endif %}
 
 
-  <div class="mt-4 card comments" style="width: 70%">
+
+  <div class="mt-4 mb-2 card comments" style="width: 70%">
+    <div class="container m-2">
+    {% if task.comments %}
+    <ul style="margin-left:-50px">
     {% for comment in task.comments %}
       {% include "comment_proto.html" %}
     {% endfor %}
+  </ul>
+    {% else %}
+    <h5>Be the first to comment!</h5>
+    {% endif %}
+    <form class="comment-form" task_id={{task.id}} action="">
+      <div class="form-group">
+        <input class="form-control"  style="width:60%" type="text" name="comment-input" id="comment" placeholder="Write a comment">
+      </div>
+    </form>
+  </div>
   </div>
 
+
+<script src="{{url_for('static', filename='scripts/comment.js')}}"></script>
 <script src="{{url_for('static', filename='scripts/check.js')}}"></script>
 </div>
 {% endblock content %}

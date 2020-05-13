@@ -1,5 +1,10 @@
+<li>
 <section style="display:flex ; flex-diretion:row">
-  <img style="width:40px; height:40px;" src="{{url_for('static', filename='pfps/'+comment.commentor.image_file)}}" alt="">
-  <h2>{{comment.commentor.username}}</h2>
+  <h5>{{comment.commentor.username}}</h5>
 </section>
-<p>{{comment.content}}</p>
+<section>
+  <p>{{comment.content}}</p>
+</section>
+<p style="position:relative;float:right;bottom:25px; margin-right: 5px;font-size:10pt; margin-top:5px">{{comment.date_posted.strftime('%x')}}</p>
+<hr>
+</li>
