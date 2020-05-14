@@ -1,6 +1,8 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+<link rel="stylesheet" type='text/css' href="static/stylesheets/home.css">
+
 <div class="container mt-4">
 <style media="screen">
   #titlearea {
@@ -49,7 +51,7 @@
 
 
 
-<div class="buffer" style=" height: 10.2vh"></div>
+<div class="buffer" style=" "></div>
 
 
   {% if current_user.id==task.author.id %}
@@ -191,10 +193,16 @@
 
 
 
-  <div class="mt-4 mb-2 card comments" style="width: 70%">
+  <div class="mt-4 mb-2 card comments" style="">
     <div class="container m-2">
+      <form class="comment-form" task_id={{task.id}} action="">
+        <div class="form-group">
+          <h6>Write a comment</h6>
+          <input class="form-control"  style="width:60%" type="text" name="comment-input" id="comment" placeholder="Write a comment">
+        </div>
+      </form>
     {% if task.comments %}
-    <ul style="margin-left:-50px">
+    <ul style="margin-left:-50px;">
     {% for comment in task.comments %}
       {% include "comment_proto.html" %}
     {% endfor %}
@@ -202,11 +210,7 @@
     {% else %}
     <h5>Be the first to comment!</h5>
     {% endif %}
-    <form class="comment-form" task_id={{task.id}} action="">
-      <div class="form-group">
-        <input class="form-control"  style="width:60%" type="text" name="comment-input" id="comment" placeholder="Write a comment">
-      </div>
-    </form>
+
   </div>
   </div>
 

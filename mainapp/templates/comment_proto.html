@@ -1,10 +1,10 @@
-<li>
+<li style="border: 1px dashed rgb(188, 223, 181); border-radius: 10px;">
 <section style="display:flex ; flex-diretion:row">
-  <h5>{{comment.commentor.username}}</h5>
+  <h5 class="ml-2 mt-2">{{comment.commentor.username}}</h5>
 </section>
 <section>
-  <p>{{comment.content}}</p>
+  <p style="text-align: left;" class="ml-2">{{comment.content}}</p>
 </section>
 <p style="position:relative;float:right;bottom:25px; margin-right: 5px;font-size:10pt; margin-top:5px">{{comment.date_posted.strftime('%x')}}</p>
-<hr>
+
 </li>

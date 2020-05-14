@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="static/stylesheets/singlepost.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', filename='stylesheets/home.css')}}">
     <style media="screen">
     html, body {
     max-width: 100%;
@@ -82,24 +83,22 @@ background: #555;
         font-size: 14pt;
       }
 
-      @media (max-width:1300) {
-        font-size: 10pt;
-      }
+
 
     </style>
     <title>{{title}}</title>
   </head>
   <body>
 
-  <nav class="fixed-top" style="background-color:rgba(46, 154, 24, 0.64)">
+  <nav class="fixed-top" style="">
     <div class="container">
       <div class="row mt-3 mb-3">
     <div class="col">
       <a style="text-decoration:none; color:inherit;"href="{{url_for('home')}}"><h4><i>Taskyy</i></h4></a>
     </div>
     <div class="col">
-      <form class="" action="" method="post">
-        <input class="form-control" type="text" name="" value="" placeholder="Search">
+      <form id="searchbar" style='position:relative' class="" action="" method="post">
+        <input id="searchfield" class="searching" type="text" name="" value="" placeholder="Search Users">
       </form>
     </div>
     <div class="col">
@@ -115,7 +114,7 @@ background: #555;
     {% with messages = get_flashed_messages(with_categories=true) %}
       {%if messages%}
           {%for category, message in messages%}
-            <div class="flashbar alert alert-success">
+            <div style="margin-top:75px;"class="flashbar alert alert-danger">
               {{message}}
             </div>
           {%endfor%}
@@ -132,6 +131,7 @@ background: #555;
 
   <!--  <script src="/static/js/moment.min.js"></script>-->
     <link rel="stylesheet" href="{{url_for('static', filename='stylesheets/singlepost.css')}}">
+    <script src="{{url_for('static', filename='scripts/search.js')}}"></script>
     <script src="{{url_for('static', filename='scripts/comment.js')}}"></script>
     <script src="{{url_for('static', filename='scripts/settings.js')}}"></script>
     <script src="{{url_for('static', filename='scripts/flashhide.js')}}"></script>
