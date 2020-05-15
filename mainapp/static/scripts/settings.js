@@ -28,16 +28,16 @@ $(document).ready(function() {
       var edit = document.createElement("a");
       edit.style = 'position:absolute;  bottom:1px; left: 105px; ';
       edit.innerHTML = 'Edit';
-      edit.href = "posts/" + $(this).attr('t'); 
+      edit.href = "posts/" + $(this).attr('t');
       edit.className = ("btn btn-sm btn-outline-info edit edit" + id);
       edit.id = (id + 'edit');
       document.getElementById(id).appendChild(settings);
-      document.getElementById(id).appendChild(edit);
+      //document.getElementById(id).appendChild(edit);
     }
   }
   );
 
-  $(document).on('click', 'a.deletebutton', function(event){
+  $(document).on('click', '.deletebutton', function(event){
     var task_id =$(this).attr("id");
     req = $.ajax({
       url : '/delete_post',

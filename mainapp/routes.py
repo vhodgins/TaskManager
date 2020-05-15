@@ -1,5 +1,5 @@
 #package folder, database classes
-from mainapp.models import User, Post, Comment, Likes, Dislikes
+from mainapp.models import *
 #flask functions
 from flask import escape, render_template, request, url_for, flash, redirect, abort, jsonify
 #package folder, Forms
@@ -180,7 +180,12 @@ def post(post_id):
 @app.route('/search/<field_query>', methods=['GET', 'POST'])
 def search(field_query):
     accounts = User.query.filter(User.username.contains(str(field_query))).all()
-    return render_template('search.html', accounts = accounts)
+    accounts = sorted(accounts, key=lambda user: user.username)
+    if current_user.is_authenticated:
+        friends = [friend.friend_id for friend in current_user.friends]
+    else:
+        friends = []
+    return render_template('search.html', accounts = accounts, friends= friends)
 
 
 @app.route('/upvote', methods=['GET','POST'])
@@ -235,10 +240,10 @@ def check_task():
         task.content = 'Completed'
         db.session.commit()
         return jsonify({'result' : 'success', 'Content' : 'Completed', 'button_img' :url_for('static', filename='assets/x.png')})
-    else:
+    '''else:
         task.content = ''
         db.session.commit()
-        return jsonify({'result' : 'success', 'Content' : '', 'button_img' : url_for('static', filename='assets/check.png') })
+        return jsonify({'result' : 'success', 'Content' : '', 'button_img' : url_for('static', filename='assets/check.png') })'''
 
 
 
@@ -280,6 +285,12 @@ def account(account_id):
 @app.route('/delete_post', methods=["GET", "POST"])
 def delete_post():
     id = list(map(int, re.findall(r'\d+', request.form['id'])))[0]
+    print(id)
+    comments = Comment.query.filter_by(post=Post.query.filter_by(id=id).first().id).all()
+    if comments:
+        for comment in comments:
+            db.session.delete(comment)
+    db.session.commit()
     db.session.delete(Post.query.filter_by(id=id).first())
     db.session.commit()
     return jsonify({'result' : 'success'})
@@ -290,5 +301,19 @@ def delete_post():
 def make_comment():
     c = Comment(user_id=current_user.id, content=request.form['content'], post=request.form['post'])
     db.session.add(c)
+    db.session.commit()
+    return jsonify({'result' : 'success'})
+
+
+@app.route('/add_friend', methods=['GET', 'POST'])
+def add_friend():
+    print(request.form['id'])
+    print([friend.friend_id for friend in current_user.friends])
+    if int(request.form['id']) in [friend.friend_id for friend in current_user.friends]:
+            f = Friends.query.filter_by(user_id=current_user.id , friend_id = int(request.form['id'])).first()
+            db.session.delete(f)
+    else:
+        f = Friends(user_id = current_user.id , friend_id = request.form['id'])
+        db.session.add(f)
     db.session.commit()
     return jsonify({'result' : 'success'})

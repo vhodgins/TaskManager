@@ -102,6 +102,12 @@ top: 150px;
   }
 
 
+  @media (max-width:990px) {
+    #searchfield {
+      margin-left:-3vw;
+    }
+  }
+
 @media (max-width: 1800px ) {
 #mytaskslist {
   top: 155px;
@@ -178,7 +184,8 @@ nav {
 
 
 #searchfield {
-  width: 50vw;
+  width: 200px;
+  margin:auto;
 }
 #searchbar {
   margin-top:-5px;
@@ -201,6 +208,8 @@ nav {
 }
 
 }
+
+
 
 
 .searching {
@@ -229,4 +238,100 @@ border-radius: 6px;
       top: -webkit-calc(370px - 40vw);
     }
 
+  }
+
+@media (max-width:376px) {
+  nav {
+    height:60px;
+  }
+  nav div a h4 {
+    margin-top: -5px;
+    margin-left: -10px;
+  }
+  #searchbar {
+    width: 60vw;
+  }
+  #searchfield {
+    height:35px;
+  }
+  nav div div a h6 {
+    float:left;
+    margin-top:-20px;
+    margin-left:10px;
+  }
+}
+
+html, body {
+max-width: 100%;
+overflow-x: hidden;
+
+}
+
+::-webkit-scrollbar {
+width: 4px;
+}
+::-webkit-scrollbar-track {
+background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #555;
+}
+
+
+
+#loginbox {
+    margin-top: 100px;
+  }
+
+
+  body{
+    height: 100vh;
+    background: rgba(46, 154, 24, 0.24) ;
+  }
+  .navbar-right {
+    margin-right: 0px;
+  }
+
+
+  nav div div div {
+    text-align: center;
+  }
+
+  .updatebutton {
+
+
+    position: absolute;
+    top: 5px;
+
+
+  }
+
+  .settings {
+
+      -webkit-transform: translate(-50%,-50%);
+      transform: translate(-50%,20%);
+      position: absolute;
+      bottom: 10px;
+      left: 20px;
+
+
+  }
+
+  p {
+    font-family: "Gill Sans MT", sans-serif;
+    font-weight: 200;
+  }
+
+  .task-title {
+    font-size: 12pt;
+  }
+  .task-author {
+    font-size: 14pt;
   }

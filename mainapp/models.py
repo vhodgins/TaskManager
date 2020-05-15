@@ -29,7 +29,7 @@ class Friends(db.Model):
     friend_id = db.Column(db.Integer)
 
     def __repr__(self):
-        return f"User('{self.friend.username}')"
+        return f"User('{self.friend_id}')"
 
 
 
