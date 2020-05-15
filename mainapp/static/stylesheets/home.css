@@ -2,16 +2,32 @@
   margin-left: 10px;
 }
 
-.updatebutton {
 
-  -webkit-transform: translate(-50%,-50%);
-  transform: translate(-50%,-50%);
-  position: absolute;
-  top: 50%;
-  left: 20px;
-
+nav {
+  background-color:rgba(46, 154, 24, 0.64)
 }
 
+nav hr{
+  margin-top:10px;
+}
+
+.buffer {
+  height: 10.2vh;
+}
+
+#searchbar {
+  margin-top: 5px;
+  width:200px;
+}
+
+.comments {
+  width: 70%;
+}
+
+#searchfield {
+  width:300px;
+  text-align: center;
+}
 
 span button img:hover {
   animation-name: rotate;
@@ -30,7 +46,7 @@ span button img:hover {
 
     }
   }
-  #accountposts::-webkit-scrollbar { width: 0 !important }
+
   #titlearea {
     overflow:hidden;
   }
@@ -91,6 +107,9 @@ top: 150px;
   top: 155px;
 }
 
+  #mobilehidden {
+    margin-top: 100px;
+  }
 
 .mypost {
 
@@ -99,7 +118,7 @@ top: 150px;
 }
 
 
-    @media (max-width: 1500px ) {
+    @media (max-width: 1300px ) {
       #mobilehidden {
   visibility: hidden;
   }
@@ -132,6 +151,61 @@ top: 150px;
   .upvotebuttons {
     top:140px;
   }
+  nav {
+    height:40px;
+  }
+  nav div a h4 {
+    font-size:10pt;
+  }
+
+  nav div div a h6 {
+    margin-top:-6px;
+    font-size: 9pt;
+  }
+
+nav hr {
+  visibility: hidden;
+}
+
+nav div form {
+  font-size: 10pt;
+  margin-top:-7px;
+}
+
+nav {
+  background-color: rgba(93, 171, 78, 1)
+}
+
+
+#searchfield {
+  width: 50vw;
+}
+#searchbar {
+  margin-top:-5px;
+}
+
+.comments {
+  width: 100%;
+  text-align: center;
+  margin: auto;
+}
+
+.comments form input {
+  margin:auto;
+  margin-top: 5px;
+  width: 80vw;
+}
+
+.buffer {
+  height: 3.5vh;
+}
+
+}
+
+
+.searching {
+border:none;
+border-radius: 6px;
 }
 
   @media (max-width:580px) {

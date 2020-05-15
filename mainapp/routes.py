@@ -13,6 +13,7 @@ import os
 from PIL import Image
 import time
 from datetime import datetime
+import re
 
 
 def datetime_from_utc_to_local(utc_datetime):
@@ -126,6 +127,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
+
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
@@ -163,6 +165,7 @@ def post(post_id):
     form = CreateTask()
     post = Post.query.get_or_404(post_id)
     localtime=datetime_from_utc_to_local(post.date_posted)
+    likes = len(Likes.query.filter_by(post_id=post.id).all()) - len(Dislikes.query.filter_by(post_id=post.id).all())
     if form.validate_on_submit():
         post.title = form.title.data
         post.content= form.content.data
@@ -171,7 +174,13 @@ def post(post_id):
     elif request.method == 'GET':
         form.title.data = post.title
         form.content.data = post.content
-    return render_template('post.html', form=form, task=post, title=post.title, localtime=localtime)
+    return render_template('post.html', form=form, likes=likes, account=current_user, task=post, title=post.title, localtime=localtime)
+
+
+@app.route('/search/<field_query>', methods=['GET', 'POST'])
+def search(field_query):
+    accounts = User.query.filter(User.username.contains(str(field_query))).all()
+    return render_template('search.html', accounts = accounts)
 
 
 @app.route('/upvote', methods=['GET','POST'])
@@ -221,7 +230,6 @@ def updatepost(post_id):
 
 @app.route('/check_task', methods=['GET','POST'])
 def check_task():
-    print('works')
     task = Post.query.filter_by(id=request.form['id']).first()
     if task.content != 'Completed':
         task.content = 'Completed'
@@ -267,3 +275,20 @@ def account(account_id):
         form.email.data = account.email
     image_file = url_for('static', filename='pfps/'+current_user.image_file)
     return render_template('account.html', title=account.username+"'s tasks", likes=likes, image_file=image_file, account=account, mytasklocaltimes=localtimes, form=form, mytasks=tasks)
+
+
+@app.route('/delete_post', methods=["GET", "POST"])
+def delete_post():
+    id = list(map(int, re.findall(r'\d+', request.form['id'])))[0]
+    db.session.delete(Post.query.filter_by(id=id).first())
+    db.session.commit()
+    return jsonify({'result' : 'success'})
+
+
+
+@app.route('/make_comment', methods=["GET", "POST"])
+def make_comment():
+    c = Comment(user_id=current_user.id, content=request.form['content'], post=request.form['post'])
+    db.session.add(c)
+    db.session.commit()
+    return jsonify({'result' : 'success'})

@@ -1,0 +1,18 @@
+
+/* Comment-hidden */
+.comment-hidden {
+  margin-bottom: ;
+}
+
+
+.comment-hidden .make-comment {
+  visibility: visible;
+
+}
+
+.comment-hidden .comment-content {
+  visibility: hidden;
+}
+
+
+/* Comment-visible */

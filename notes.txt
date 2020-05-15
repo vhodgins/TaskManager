@@ -1,1 +1,208 @@
-<p class="text-muted float-left" style="font-size:10pt; margin-top:-10px;; margin-left:25px; ">{{mytasklocaltimes[mytasks.index(task)].strftime('%I:%M %p %x')}}</p>
+<a class="navbar-brand" href="{{url_for('home')}}">Wacky Schemes</a>
+
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+<ul class="navbar-nav mr-auto mt-1">
+  {% if current_user.is_authenticated %}
+  <li class="nav-item active" style="">
+    <a class="nav-link navtext" href="{{url_for('newpost')}}">Post<span class="sr-only">(current)</span></a>
+  </li>
+  <li class="nav-item active">
+    <a class="nav-link navtext" href="{{url_for('logout')}}">Logout<span class="sr-only">(current)</span></a>
+  </li>
+  <li class="nav-item active">
+    <a class="nav-link navtext" href="{{url_for('account', account_id=current_user.id)}}">My Tasks<span class="sr-only">(current)</span></a>
+  </li>
+  {% else %}
+  <li class="nav-item active">
+    <a class="nav-link navtext" href="{{url_for('login')}}">Log In<span class="sr-only">(current)</span></a>
+  </li>
+  <li class="nav-item active">
+    <a class="nav-link navtext" href="{{url_for('register')}}">Register<span class="sr-only">(current)</span></a>
+  </li>
+  {% endif %}
+<ul>
+
+
+</div>
+
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+
+
+<div class="card" id='tasksection{{task.id}}'style="background: linear-gradient(to bottom right, rgb(252, 252, 252),rgba(37, 194, 118, 0.19))">
+
+    <div class=" mt-2 ml-2 " style="">
+
+
+      <div class="" style="display:flex; flex-direction:row;">
+
+      <div class="mr-4 bg-info" style="">
+        {% if account.id == current_user.id %}
+        {% if task.content != "Completed" %}
+
+      <a href="#" class='updatebutton' id='button{{task.id}}' style=" background: transparent;
+    border: none !important; "  task_id='{{task.id}}' name="button">
+        <img style="width:25px;" id='buttonimg{{task.id}}' src="{{url_for('static', filename='assets/check.png')}}">
+      </a>
+
+
+        {% else %}
+        <a href="#" class='updatebutton ' id='button{{task.id}}' style="background: transparent;
+      border: none !important; "  task_id='{{task.id}}' name="button">
+          <img style="width:25px; " id='buttonimg{{task.id}}' src="{{url_for('static', filename='assets/x.png')}}">
+        </a>
+        {% endif %}
+        {% endif %}
+      </div>
+
+
+      <section style="width:360px; margin-left:25px; margin-bottom: -30px; line-height:20px; margin-top:5px;">
+        <p style=" font-size:12pt; color:inherit; text-decoration:none;">
+          {{task.title}}
+        </p>
+      </section>
+
+      </div>
+      <section>
+      <!--  <ul id="mytaskslist" class="float-right mr-2 "style=" list-style-type:none; display: flex; flex-direction:row">
+      <li>
+        <li>
+        <p class="mr-2" id="like{{task.id}}" style=" font-size:10pt;">{{tasklikes[task.id]}}</p>
+      </li>
+      {%if likes[task.id] == 1 %}
+      <li>
+        <a href="#" class="mr-1 btn btn-outline-success btn-sm upvotebutton" value="1" id="upvote{{task.id}}" task_id="{{task.id}}" style="background-color:green; height:20px; width:20px; border-radius:50%; text-decoration:none; color:green;" ></a>
+      </li>
+      <li>
+        <a href="#" class="downvotebutton btn btn-sm btn-outline-danger" value="0" id="downvote{{task.id}}" task_id="{{task.id}}" style="height:20px; width:20px; border-radius:50%; text-decoration: none; color: red" ></a>
+      </li>
+      {% elif likes[task.id] == -1 %}
+      <li>
+        <a href="#" class="mr-1 btn btn-outline-success btn-sm upvotebutton" value="0" id="upvote{{task.id}}" task_id="{{task.id}}" style="height:20px; width:20px; border-radius:50%; text-decoration:none; color:green;" ></a>
+      </li>
+      <li>
+        <a href="#" class="downvotebutton btn btn-sm btn-outline-danger" value="-1" id="downvote{{task.id}}" task_id="{{task.id}}" style="background-color: red; height:20px; width:20px; border-radius:50%; text-decoration: none; color: red" ></a>
+      </li>
+      {% else %}
+      <li>
+        <a href="#" class="mr-1 btn btn-outline-success btn-sm upvotebutton" value="0" id="upvote{{task.id}}" task_id="{{task.id}}" style="height:20px; width:20px; border-radius:50%; text-decoration:none; color:green;" ></a>
+      </li>
+      <li>
+        <a href="#" class="downvotebutton btn btn-sm btn-outline-danger" value="0" id="downvote{{task.id}}" task_id="{{task.id}}" style="height:20px; width:20px; border-radius:50%; text-decoration: none; color: red" ></a>
+      </li>
+      {% endif %}</ul>-->
+    </section>
+
+    <div class="">
+
+
+        <div class="">
+          <a href="#"><img style="width:17px;position:relative; left: 387px; top:23px;"src="{{url_for('static', filename='assets/like.png')}}" alt=""></a>
+          <p class="" style="position:relative; left: 413px; font-size:12pt; font-weight:400; margin-bottom:0px;">{{tasklikes[task.id]}}</p>
+          <p class="text-muted" style="position:relative; left: 310px; font-size:10pt; margin-bottom:5px;">{{mytasklocaltimes[mytasks.index(task)].strftime('%I:%M %p %x')}}</p>
+        </div>
+
+
+      </div>
+
+
+
+
+
+    <!--  <li class="font-weight-light ml-3"  id='content{{task.id}}'>{{task.content}}</li>
+-->
+
+
+
+
+
+
+</div>
+</div>
+
+
+
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+
+
+
+<div class="card ml-2 bg-light mb-4 post " id='tasksection{{task.id}}'style=" width:100%; ">
+  <div class="card-body" style="margin-left: -30px; margin-top:-7px;">
+    <div class="row ml-2" style="margin-top: -5px;">
+      <img src="{{url_for('static', filename='pfps/'+task.author.image_file)}}" class="ml-4" style="border: 2px solid lightgrey; border-radius:10%; width:40px; height: 40px;" alt="">
+      <h5 class="ml-1">
+        <a style="font-size: 14pt;color:inherit; text-decoration:none; font-family: Calibri;"href="{{url_for('account', account_id=task.author.id)}}">{{task.author.username}}
+        </a>
+      </h5> <!-- .strftime('%I:%M %p %x') -->
+        </div>
+        <p class="text-muted float-left" style="font-size:10pt; margin-top:-20px; margin-left:75px; ">{{localtimes[tasks.index(task)].strftime('%I:%M %p %x')}}</p>
+
+
+    <div class="row float-left" style="margin-top:-10px;">
+      <ul class=""style="margin-left:-10px; list-style-type:none; display:flex; flex-direction: row;">
+        <li style="height:50px; width:440px;"class="font-weight-normal">
+          <p style="font-size:11pt; " class="posttext font-weight-light">
+          <a class="" href="{{url_for('post', post_id=task.id)}}" style=" color:inherit; text-decoration:none;">
+            {{task.title}}
+          </a>
+          </p>
+        </li>
+
+
+        <!--<li class="font-weight-light ml-3" id='content{{task.id}}'>{{task.content}}</li>-->
+    </ul>
+    <ul class='upvotebuttons'style="position:absolute;  right:20px;  list-style-type:none; display: flex; flex-direction:row">
+      <li>
+        <li>
+        <p class="mr-2" id="like{{task.id}}" style="margin-top:3px; font-size:10pt;">{{tasklikes[task.id]}}<!--{{task.likes}}--></p>
+      </li>
+      {%if likes[task.id] == 1 %}
+      <li>
+        <a href="#" class="mr-1 btn btn-outline-success btn-sm upvotebutton" value="1" id="upvote{{task.id}}" task_id="{{task.id}}" style="background-color:green; height:20px; width:20px; border-radius:50%; text-decoration:none; color:green;" ></a>
+      </li>
+      <li>
+        <a href="#" class="downvotebutton btn btn-sm btn-outline-danger" value="0" id="downvote{{task.id}}" task_id="{{task.id}}" style="height:20px; width:20px; border-radius:50%; text-decoration: none; color: red" ></a>
+      </li>
+      {% elif likes[task.id] == -1 %}
+      <li>
+        <a href="#" class="mr-1 btn btn-outline-success btn-sm upvotebutton" value="0" id="upvote{{task.id}}" task_id="{{task.id}}" style="height:20px; width:20px; border-radius:50%; text-decoration:none; color:green;" ></a>
+      </li>
+      <li>
+        <a href="#" class="downvotebutton btn btn-sm btn-outline-danger" value="-1" id="downvote{{task.id}}" task_id="{{task.id}}" style="background-color: red; height:20px; width:20px; border-radius:50%; text-decoration: none; color: red" ></a>
+      </li>
+      {% else %}
+      <li>
+        <a href="#" class="mr-1 btn btn-outline-success btn-sm upvotebutton" value="0" id="upvote{{task.id}}" task_id="{{task.id}}" style="height:20px; width:20px; border-radius:50%; text-decoration:none; color:green;" ></a>
+      </li>
+      <li>
+        <a href="#" class="downvotebutton btn btn-sm btn-outline-danger" value="0" id="downvote{{task.id}}" task_id="{{task.id}}" style="height:20px; width:20px; border-radius:50%; text-decoration: none; color: red" ></a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+
+
+
+
+
+
+  </div>
+
+</div>
+
+
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+<section>
+
+</section>

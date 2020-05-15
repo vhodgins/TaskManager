@@ -4,14 +4,34 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="crossorigin="anonymous"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link rel="stylesheet" type="text/css" href="static/stylesheets/singlepost.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', filename='stylesheets/home.css')}}">
     <style media="screen">
     html, body {
     max-width: 100%;
     overflow-x: hidden;
 
 }
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #555;
+}
+
+
 
     #loginbox {
         margin-top: 100px;
@@ -20,12 +40,48 @@
 
       body{
         height: 100vh;
-        background: linear-gradient(to bottom right, rgb(72, 75, 117), rgb(126, 210, 157));
+        background: rgba(46, 154, 24, 0.24) ;
       }
       .navbar-right {
         margin-right: 0px;
       }
 
+
+      nav div div div {
+        text-align: center;
+      }
+
+      .updatebutton {
+
+
+        position: absolute;
+        top: 5px;
+
+
+      }
+
+      .settings {
+
+          -webkit-transform: translate(-50%,-50%);
+          transform: translate(-50%,20%);
+          position: absolute;
+          bottom: 10px;
+          left: 20px;
+
+
+      }
+
+      p {
+        font-family: "Gill Sans MT", sans-serif;
+        font-weight: 200;
+      }
+
+      .task-title {
+        font-size: 12pt;
+      }
+      .task-author {
+        font-size: 14pt;
+      }
 
 
 
@@ -34,42 +90,31 @@
   </head>
   <body>
 
-  <nav class="fixed-top navbar navbar-expand-lg navbar-light" style="background-color:rgba(124, 230, 241, 0.4)">
-    <a class="navbar-brand" href="{{url_for('home')}}">Wacky Schemes</a>
+  <nav class="fixed-top" style="">
+    <div class="container">
+      <div class="row mt-3 mb-3">
+    <div class="col">
+      <a style="text-decoration:none; color:inherit;"href="{{url_for('home')}}"><h4><i>Taskyy</i></h4></a>
+    </div>
+    <div class="col">
+      <form id="searchbar" style='position:relative' class="" action="" method="post">
+        <input id="searchfield" class="searching" type="text" name="" value="" placeholder="Search Users">
+      </form>
+    </div>
+    <div class="col">
+      <div style="height:8px"> </div>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto mt-1">
-      {% if current_user.is_authenticated %}
-      <li class="nav-item active" style="">
-        <a class="nav-link navtext" href="{{url_for('newpost')}}">Post<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link navtext" href="{{url_for('logout')}}">Logout<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link navtext" href="{{url_for('account', account_id=current_user.id)}}">My Tasks<span class="sr-only">(current)</span></a>
-      </li>
-      {% else %}
-      <li class="nav-item active">
-        <a class="nav-link navtext" href="{{url_for('login')}}">Log In<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link navtext" href="{{url_for('register')}}">Register<span class="sr-only">(current)</span></a>
-      </li>
-      {% endif %}
-    <ul>
-
+      <a style="text-decoration:none; color:inherit" href="{{url_for('account', account_id=current_user.id)}}"><h6><i>Account</i></h6></a>
 
     </div>
+    </div>
+    <hr style="position:fixed; width:100vw; left:0px; top:54px; border: 2px solid rgb(43, 157, 51)">
   </nav>
+
     {% with messages = get_flashed_messages(with_categories=true) %}
       {%if messages%}
           {%for category, message in messages%}
-            <div class="flashbar alert alert-success">
+            <div style="margin-top:75px;"class="flashbar alert alert-danger">
               {{message}}
             </div>
           {%endfor%}
@@ -85,6 +130,10 @@
 
 
   <!--  <script src="/static/js/moment.min.js"></script>-->
+    <link rel="stylesheet" href="{{url_for('static', filename='stylesheets/singlepost.css')}}">
+    <script src="{{url_for('static', filename='scripts/search.js')}}"></script>
+    <script src="{{url_for('static', filename='scripts/comment.js')}}"></script>
+    <script src="{{url_for('static', filename='scripts/settings.js')}}"></script>
     <script src="{{url_for('static', filename='scripts/flashhide.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
