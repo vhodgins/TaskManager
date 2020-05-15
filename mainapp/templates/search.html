@@ -2,15 +2,75 @@
 
 {% block content %}
 
-<div class="container" style="margin-top:100px">
 
-  <div class="card">
+<style>
+
+.search-page-account {
+
+}
+
+.search-page-account h5 a {
+  text-decoration:none;
+  color:black;
+}
+
+#searchwidth {
+  width:80%;
+}
+
+@media (max-width:768px) {
+  html {
+    font-size: 11pt;
+  }
+  section div div div p {
+    font-size:8pt;
+  }
+}
+</style>
+
+
+
+<div class="container" style=" margin-top:100px">
+  {% if not accounts %}
+  <h5 style='text-align:center;'><i>Sorry! We couldn't find anyone with that name</i></h5>
+  {% endif %}
+  <div class="card" id="searchwidth" style=" margin:auto;">
+
+
 
 
 {% for account in accounts %}
-<h3>{{account.username}}</h3>
+
+<section style="">
+  <div class=" mr-3 search-page-account mt-1 ">
+      <div class="row ml-3 mt-2 ">
+        <div class="col">
+              <h5><a href="{{url_for('account' , account_id=account.id)}}"> {{account.username}}</a></h5>
+        <p style="" class="  text-muted">bio bio bio bio bio bio bio bio bio bio bio bio bio bio bio bio bio bio bio bio</p>
+      </div>
+
+
+
+      <div style="">
+        {% if current_user.is_authenticated %}
+        {% if account.id in friends %}
+        <a href="#"  userid='{{account.id}}' class="followbtn mr-2 btn btn-light">Unfollow</a>
+        {% else %}
+        <a href="#"  userid='{{account.id}}' class="followbtn mr-2 btn btn-light">Follow</a>
+        {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    {% if accounts %}
+    <hr style="margin-bottom:0px; margin-top:20px">
+    {% endif %}
+
+  </div>
+
+</section>
 
 {% endfor %}
+
 </div>
 </div>
 
