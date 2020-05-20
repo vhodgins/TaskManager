@@ -6,6 +6,8 @@
     font-size: 11pt;
     text-align:center;
   }
+
+
 </style>
 
 
@@ -24,32 +26,7 @@
     <div class="row">
 
     <ul style="list-style-type:none; display:flex; flex-direction: row; ">
-    <form class="" action="" method="post">
-      {{form.hidden_tag()}}
-      <div class="row">
-
-      <li class="font-weight-normal">
-
-            {%if form.title.errors%}
-            {{form.title(maxlength="100", id="titlearea",class="form-control form-control is-invalid", placeholder="type something")}}
-            <div class="invalid-feedback">
-              {%for error in form.title.errors%}
-                <span>{{error}}</span>
-              {%endfor%}
-            {%else%}
-          {{form.title(maxlength="100", id="titlearea", class="form-control", placeholder="type something", style="resize:none; width:300px; margin-left:-20px;background: inherit;")}}
-
-          {%endif%}
-        </li>
-
-
-      <li class="ml-4 mt-1">
-        {{form.submit(class="btn btn-sm btn-outline-info")}}
-      </li>
-
-
-    </div>
-    </form>
+    {% include 'newtaskform.html' %}
     </ul>
 
 
@@ -90,7 +67,7 @@
   <div class="col-sm-5"></div>
 
 
-  <div id="maincontent" class="card" style="width:100%">
+  <div id="maincontent" class="card " style="width:100%">
     <legend class="ml-3 mt-2">Feed</legend>
     <span class="border-bottom ml-2 mb-2 mr-2"></span>
     <div class="mr-4" style="margin-left:-25;">

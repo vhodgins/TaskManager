@@ -6,87 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="static/stylesheets/singlepost.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <style media="screen">
-    html, body {
-    max-width: 100%;
-    overflow-x: hidden;
-
-}
-
-::-webkit-scrollbar {
-  width: 4px;
-}
-::-webkit-scrollbar-track {
-background: #f1f1f1;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-background: #888;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-background: #555;
-}
-
-
-
-    #loginbox {
-        margin-top: 100px;
-      }
-
-
-      body{
-        height: 100vh;
-        background: rgba(46, 154, 24, 0.24) ;
-      }
-      .navbar-right {
-        margin-right: 0px;
-      }
-
-
-      nav div div div {
-        text-align: center;
-      }
-
-      .updatebutton {
-
-
-        position: absolute;
-        top: 5px;
-
-
-      }
-
-      .settings {
-
-          -webkit-transform: translate(-50%,-50%);
-          transform: translate(-50%,20%);
-          position: absolute;
-          bottom: 10px;
-          left: 20px;
-
-
-      }
-
-      p {
-        font-family: "Gill Sans MT", sans-serif;
-        font-weight: 200;
-      }
-
-      .task-title {
-        font-size: 12pt;
-      }
-      .task-author {
-        font-size: 14pt;
-      }
-
-      @media (max-width:1300) {
-        font-size: 10pt;
-      }
-
-    </style>
+    <link rel="stylesheet" href="{{url_for('static' , filename='stylesheets/account.css')}}">
     <title>{{title}}</title>
   </head>
   <body>
@@ -98,8 +18,8 @@ background: #555;
       <a style="text-decoration:none; color:inherit;"href="{{url_for('home')}}"><h4><i>Taskyy</i></h4></a>
     </div>
     <div class="col">
-      <form class="" action="index.html" method="post">
-        <input class="form-control" type="text" name="" value="" placeholder="Search">
+      <form id="searchbar" class="" action="#" method="post">
+        <input id="searchfield" style="text-align: center;"class="form-control" type="text" name="" value="" placeholder="Search Users">
       </form>
     </div>
     <div class="col">
@@ -125,17 +45,35 @@ background: #555;
 
 
     <style media="screen">
-      h1 {
-          font-family: "Calibri";
-      }
+
     </style>
 
 
     <div class="buffer" style=" height: 10.2vh"></div>
 
-    <div class=" container-fluid " style="">
-        <div class="card main ml-5 mr-5">
-            <h1 class="mt-2 ml-2">{{account.username}}'s To-Do List</h1>
+    <div class=" container-fluid " style="width:80%;">
+        <div class="row" style="margin:auto;">
+
+          <div class="card col-md-5 ">
+            <h3 class="mt-2">{{account.username}}'s tasks</h3>
+            <hr style="margin:0 0 5px 0;">
+            <div class="mt-4" style="width:80%;">
+              {% for task in account.posts %}
+              {% include 'singlepost.html' %}
+              {% endfor %}
+            </div>
+
+          </div>
+
+          <div class="col-md-1">
+
+          </div>
+
+          <div class="card col-md-5 ">
+            <h2>2aidura94pfoNVB48OI20FVNlsiyr</h2>
+          </div>
+
+
         </div>
     </div>
 
@@ -145,6 +83,7 @@ background: #555;
 
   <!--  <script src="/static/js/moment.min.js"></script>-->
     <link rel="stylesheet" href="{{url_for('static', filename='stylesheets/singlepost.css')}}">
+    <script src="{{url_for('static', filename='scripts/search.js')}}"></script>
     <script src="{{url_for('static', filename='scripts/comment.js')}}"></script>
     <script src="{{url_for('static', filename='scripts/settings.js')}}"></script>
     <script src="{{url_for('static', filename='scripts/flashhide.js')}}"></script>

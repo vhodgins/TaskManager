@@ -1,0 +1,22 @@
+<form class="" id="newtask" style="margin-bottom:-50px;" action="" method="post">
+    <textarea name="CreateTask" rows="4" id='titlearea' placeholder="Make a Task" maxlength='100' style="resize:none; width:300px; margin-left:-20px;background: inherit; border-radius:2px;" cols="80"></textarea>
+    <div class="" style='position:absolute; right:20px; top:70px;'>
+    <label for="">List:</label>
+    <select id='List'size="4" class="custom-select" style="width: 90px;  " name="">
+      <option value="dick">dick</option>
+        <option value="cock">cock</option>
+          <option value="pee">peepeEEEEEEEEEEEe</option>
+            <option value="willy">willy</option>
+    </select>
+  </div>
+    <div class=""style="margin-left:-20px;">
+  <label for="">Due Date:</label><input type="date"  id='date' class="form-control"  style="width:160px;"name="" value="">
+</div>
+  <div class=""style="position:relative; top:-72px; left:150px;">
+    <label for="">Private</label>
+    <input id='private' type="checkbox" name="" value="">
+  </div>
+  <input type="submit" style="width:90px; margin-bottom: -100px; position:relative; top:-117px; left:325px;"class="btn btn-outline-info"></input>
+</form>
+
+<script src="{{url_for('static', filename='scripts/newtask.js')}}"></script>
