@@ -6,10 +6,14 @@
     font-size: 11pt;
     text-align:center;
   }
+
+
 </style>
 
 
 <link rel="stylesheet" href="{{url_for('static', filename='stylesheets/home.css')}}">
+<section id="maincont" style='display:none;'>
+
 
 <div class="container mt-4">
 <!-- Stack the columns on mobile by making one full-width and the other half-width -->
@@ -24,32 +28,7 @@
     <div class="row">
 
     <ul style="list-style-type:none; display:flex; flex-direction: row; ">
-    <form class="" action="" method="post">
-      {{form.hidden_tag()}}
-      <div class="row">
-
-      <li class="font-weight-normal">
-
-            {%if form.title.errors%}
-            {{form.title(maxlength="100", id="titlearea",class="form-control form-control is-invalid", placeholder="type something")}}
-            <div class="invalid-feedback">
-              {%for error in form.title.errors%}
-                <span>{{error}}</span>
-              {%endfor%}
-            {%else%}
-          {{form.title(maxlength="100", id="titlearea", class="form-control", placeholder="type something", style="resize:none; width:300px; margin-left:-20px;background: inherit;")}}
-
-          {%endif%}
-        </li>
-
-
-      <li class="ml-4 mt-1">
-        {{form.submit(class="btn btn-sm btn-outline-info")}}
-      </li>
-
-
-    </div>
-    </form>
+    {% include 'newtaskform.html' %}
     </ul>
 
 
@@ -59,38 +38,50 @@
   </div>
 
   <div class="card mt-4" style="height:450px; margin-right:-30px;">
-    <legend class="ml-3 mt-2">
-      <a style="text-decoration:none; color:inherit" href="{{url_for('account', account_id=current_user.id)}}">
-       My Tasks
-     </a>
+    <legend class="ml-3 mt-2 ">
+      <select  onchange="homelist()" id="list-select" class="form-control" style="width:200px; font-size:16pt;" name="">
+            <option selected  value="{{lists[0].id}}">{{lists[0].name}}</option>
+            {% if lists[1] %}
+            {% for list in lists %}
+            {% if list != lists[0]  %}
+            <option value="{{list.id}}">{{list.name}}</option>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+      </select>
+      <a href="{{url_for('dashboard')}}" style="position:absolute; right:20px; top:13px; color:rgb(87, 92, 131); text-decoration:none; font-size:14pt;">Dashboard</a>
      </legend>
     <span class="border-bottom ml-2 mr-2"></span>
 
-    <div class="" style="">
-      <ul id="accountposts"  style="position:relative; left: -30px; width:105%; list-style-type:none; height:370px;overflow-x:hidden;">
+    <div class="" id="list-area"  style="">
+        <h3 id='loading' style='margin:auto; text-align:center; position:relative; top:100px;'></h3>
+
+      {% for list in lists %}
+      <ul class='mainpagelist' id="accountposts{{list.id}}"  style="{% if list != lists[0] %} display: none; {%endif%}position:absolute; left: -30px; width:105%; list-style-type:none; height:370px;overflow-x:hidden;">
     {% if current_user.is_authenticated %}
-    {%for task in mytasks | reverse %}
+    {%for task in list.tasks | reverse %}
     {% if task.content != 'Completed' %}
     {% include 'mainpageaccountpost.html' %}
     {% endif %}
     {%endfor%}
-    {%for task in mytasks | reverse %}
+    {%for task in list.tasks | reverse %}
     {% if task.content == 'Completed' %}
     {% include 'mainpageaccountpost.html' %}
     {% endif %}
     {%endfor%}
     {% endif %}
   </ul>
+    {% endfor %}
 
   </div>
-    <span class="border-bottom ml-1 mr-1" style="margin-top:-16px;"></span>
+
   </div>
 </div>
 
   <div class="col-sm-5"></div>
 
 
-  <div id="maincontent" class="card" style="width:100%">
+  <div id="maincontent" class="card " style="width:100%">
     <legend class="ml-3 mt-2">Feed</legend>
     <span class="border-bottom ml-2 mb-2 mr-2"></span>
     <div class="mr-4" style="margin-left:-25;">
@@ -117,9 +108,13 @@
 
 
 
-
-
+<script src="{{url_for('static', filename='scripts/homelists.js')}}"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#maincont').show(150);
+  })
+</script>
 <script src="{{url_for('static', filename='scripts/check.js')}}"></script>
 </div>
-
+</section>
 {%endblock content%}

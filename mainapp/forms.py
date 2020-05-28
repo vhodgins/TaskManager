@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField, ValidationError, DateTimeField
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, BooleanField, ValidationError, DateTimeField, IntegerField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from mainapp.models import User
 from flask_login import current_user
@@ -26,6 +26,8 @@ class CreateTask(FlaskForm):
     content = StringField('Content', validators=[])
 
     #deadline = DateTimeField('Deadline', validators=[DataRequired()])
+    days = IntegerField('Days', validators=[])
+    weeks = IntegerField('Weels', validators=[])
 
     submit = SubmitField('Create Task')
 

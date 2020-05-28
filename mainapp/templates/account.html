@@ -1,141 +1,35 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="crossorigin="anonymous"></script>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="static/stylesheets/singlepost.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <style media="screen">
-    html, body {
-    max-width: 100%;
-    overflow-x: hidden;
-
-}
-
-::-webkit-scrollbar {
-  width: 4px;
-}
-::-webkit-scrollbar-track {
-background: #f1f1f1;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-background: #888;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-background: #555;
-}
+{% extends 'layout.html' %}
+{% block content %}
 
 
 
-    #loginbox {
-        margin-top: 100px;
-      }
-
-
-      body{
-        height: 100vh;
-        background: rgba(46, 154, 24, 0.24) ;
-      }
-      .navbar-right {
-        margin-right: 0px;
-      }
-
-
-      nav div div div {
-        text-align: center;
-      }
-
-      .updatebutton {
-
-
-        position: absolute;
-        top: 5px;
-
-
-      }
-
-      .settings {
-
-          -webkit-transform: translate(-50%,-50%);
-          transform: translate(-50%,20%);
-          position: absolute;
-          bottom: 10px;
-          left: 20px;
-
-
-      }
-
-      p {
-        font-family: "Gill Sans MT", sans-serif;
-        font-weight: 200;
-      }
-
-      .task-title {
-        font-size: 12pt;
-      }
-      .task-author {
-        font-size: 14pt;
-      }
-
-      @media (max-width:1300) {
-        font-size: 10pt;
-      }
-
-    </style>
-    <title>{{title}}</title>
-  </head>
-  <body>
-
-  <nav class="fixed-top" style="background-color:rgba(46, 154, 24, 0.64)">
-    <div class="container">
-      <div class="row mt-3 mb-3">
-    <div class="col">
-      <a style="text-decoration:none; color:inherit;"href="{{url_for('home')}}"><h4><i>Taskyy</i></h4></a>
-    </div>
-    <div class="col">
-      <form class="" action="index.html" method="post">
-        <input class="form-control" type="text" name="" value="" placeholder="Search">
-      </form>
-    </div>
-    <div class="col">
-      <div style="height:8px"> </div>
-
-      <a style="text-decoration:none; color:inherit" href="{{url_for('logout')}}"><h6><i>Log Out</i></h6></a>
-
-    </div>
-    </div>
-    <hr style="position:fixed; width:100vw; left:0px; top:54px; border: 2px solid rgb(43, 157, 51)">
-  </nav>
-
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {%if messages%}
-          {%for category, message in messages%}
-            <div class="flashbar alert alert-success">
-              {{message}}
-            </div>
-          {%endfor%}
-      {%endif%}
-    {% endwith %}
-
-
-
-    <style media="screen">
-      h1 {
-          font-family: "Calibri";
-      }
-    </style>
 
 
     <div class="buffer" style=" height: 10.2vh"></div>
 
-    <div class=" container-fluid " style="">
-        <div class="card main ml-5 mr-5">
-            <h1 class="mt-2 ml-2">{{account.username}}'s To-Do List</h1>
+    <div class=" container-fluid " style="width:80%;">
+        <div class="row" style="margin:auto;">
+
+          <div class="card col-md-5 ">
+            <h3 class="mt-2">{{account.username}}'s tasks</h3>
+            <hr style="margin:0 0 5px 0;">
+            <div class="mt-4" style="width:80%;">
+              {% for task in account.posts %}
+              {% include 'singlepost.html' %}
+              {% endfor %}
+            </div>
+
+          </div>
+
+          <div class="col-md-1">
+
+          </div>
+
+          <div class="card col-md-5 ">
+            <h2>2aidura94pfoNVB48OI20FVNlsiyr</h2>
+          </div>
+
+
         </div>
     </div>
 
@@ -143,12 +37,4 @@ background: #555;
 
 
 
-  <!--  <script src="/static/js/moment.min.js"></script>-->
-    <link rel="stylesheet" href="{{url_for('static', filename='stylesheets/singlepost.css')}}">
-    <script src="{{url_for('static', filename='scripts/comment.js')}}"></script>
-    <script src="{{url_for('static', filename='scripts/settings.js')}}"></script>
-    <script src="{{url_for('static', filename='scripts/flashhide.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  </body>
-</html>
+{% endblock content %}

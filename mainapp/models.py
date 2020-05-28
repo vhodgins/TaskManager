@@ -18,6 +18,7 @@ class User(db.Model, UserMixin):
     likes = db.relationship('Likes', backref='liker', lazy=True)
     comments = db.relationship('Comment', backref='commentor', lazy=True)
     friends = db.relationship('Friends', backref='root_friend', lazy=True)
+    lists = db.relationship('List', backref='lists', lazy=True)
 
 
     def __repr__(self):
@@ -64,14 +65,28 @@ class Comment(db.Model):
         return f"Comment('{self.content}', '{self.date_posted}')"
 
 
+
+class List(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), nullable=False)
+    tasks = db.relationship('Post', backref='tasks', lazy=True)
+    user = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    privacy = db.Column(db.Boolean, nullable=False)
+    def __repr__(self):
+        return f"List('{self.name}')"
+
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     content = db.Column(db.String(500), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    date_due = db.Column(db.DateTime, nullable=True)
+    list = db.Column(db.Integer, db.ForeignKey('list.id'), nullable=False)
     comments = db.relationship('Comment', backref='comments', lazy=True)
     likes = db.Column(db.Integer, nullable=False, default=0)
+    private = db.Column(db.Boolean, nullable=False)
 
 
     def __repr__(self):

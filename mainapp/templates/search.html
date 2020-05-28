@@ -34,10 +34,13 @@
   {% if not accounts %}
   <h5 style='text-align:center;'><i>Sorry! We couldn't find anyone with that name</i></h5>
   {% endif %}
+
+  {% if accounts %}
   <div class="card" id="searchwidth" style=" margin:auto;">
 
 
 
+<section id="results" style="display:none;">
 
 {% for account in accounts %}
 
@@ -70,8 +73,17 @@
 </section>
 
 {% endfor %}
+</section>
 
 </div>
+{% endif %}
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#results').slideDown(150);
+  })
+</script>
+
 
 {% endblock %}

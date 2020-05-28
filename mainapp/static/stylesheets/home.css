@@ -2,9 +2,12 @@
   margin-left: 10px;
 }
 
+div {
+  font-family: "Gill Sans MT", sans-serif;
+}
 
 nav {
-  background-color:rgba(46, 154, 24, 0.64)
+
 }
 
 nav hr{
@@ -49,6 +52,7 @@ span button img:hover {
 
   #titlearea {
     overflow:hidden;
+    height:95px;
   }
 
   #titlearea:focus {
@@ -59,7 +63,7 @@ span button img:hover {
 
   #maincontent {
     margin-left: 500px;
-    margin-top: 5%;
+    margin-top: 100px;
     margin-bottom: 5%;
 
   }
@@ -73,12 +77,8 @@ top: 150px;
 }
 
   @keyframes postarea-expand {
-        0% {
-          height:80px;
-        }
-        100%{
-          height: 200px;
-        }
+
+
   }
 
   ]
@@ -178,9 +178,6 @@ nav div form {
   margin-top:-7px;
 }
 
-nav {
-  background-color: rgba(93, 171, 78, 1)
-}
 
 
 #searchfield {
@@ -291,10 +288,7 @@ background: #555;
   }
 
 
-  body{
-    height: 100vh;
-    background: rgba(46, 154, 24, 0.24) ;
-  }
+  
   .navbar-right {
     margin-right: 0px;
   }
@@ -324,6 +318,8 @@ background: #555;
 
   }
 
+
+
   p {
     font-family: "Gill Sans MT", sans-serif;
     font-weight: 200;
@@ -334,4 +330,10 @@ background: #555;
   }
   .task-author {
     font-size: 14pt;
+  }
+
+
+  legend {
+    font-family : 'Gill Sans MT' , sans-serif;
+    font-weight: thin;
   }

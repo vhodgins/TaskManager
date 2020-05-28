@@ -1,0 +1,29 @@
+{{form.hidden_tag()}}
+<div class="row">
+
+<li class="font-weight-normal">
+
+      {%if form.title.errors%}
+      {{form.title(maxlength="100", id="titlearea",class="form-control form-control is-invalid", placeholder="type something")}}
+      <div class="invalid-feedback">
+        {%for error in form.title.errors%}
+          <span>{{error}}</span>
+        {%endfor%}
+      {%else%}
+    {{form.title(maxlength="100", id="titlearea", class="form-control", placeholder="type something", style="resize:none; width:300px; margin-left:-20px;background: inherit;")}}
+
+    {%endif%}
+
+    <div class="duration">
+    {{form.days()}}
+    {{form.weeks()}}
+  </div>
+  </li>
+
+
+<li class="ml-4 mt-1">
+  {{form.submit(class="btn btn-sm btn-outline-info")}}
+</li>
+
+
+</div>
