@@ -78,7 +78,7 @@
         <div class="">
           <a href="#"><img style="width:17px;position:relative; left: 387px; top:23px;"src="{{url_for('static', filename='assets/like.png')}}" alt=""></a>
           <p class="" style="position:relative; left: 413px; font-size:12pt; font-weight:400; margin-bottom:0px;">{{tasklikes[task.id]}}</p>
-          <p class="text-muted" style=" position:relative; left: 330px; font-size:10pt; margin-bottom:5px;">{{mytasklocaltimes[mytasks.index(task)].strftime('%I:%M %p %x')}}</p>
+          <p class="text-muted" style=" position:relative; left: 330px; font-size:10pt; margin-bottom:5px;">{{mytasklocaltimes[task.id].strftime('%I:%M %p %x')}}</p>
         </div>
 
 

@@ -7,7 +7,7 @@ div {
 }
 
 nav {
-  background-color:rgba(46, 154, 24, 0.64)
+
 }
 
 nav hr{
@@ -178,9 +178,6 @@ nav div form {
   margin-top:-7px;
 }
 
-nav {
-  background-color: rgba(93, 171, 78, 1)
-}
 
 
 #searchfield {
@@ -291,10 +288,7 @@ background: #555;
   }
 
 
-  body{
-    height: 100vh;
-    background: rgba(46, 154, 24, 0.24) ;
-  }
+  
   .navbar-right {
     margin-right: 0px;
   }

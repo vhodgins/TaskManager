@@ -2,12 +2,18 @@ $(document).ready(function(){
 
 $('#newtask').submit(function(e){
   title = $('#titlearea').val();
-  list = $('#List').val();
+  if ($('#List').val()) {
+    list = $('#List').val();
+  }
+  else {
+    list = id
+  }
   date = $('#date').val();
   private = $('#private').val();
   console.log(date);
-  
-  e.preventDefault();
+
+
+
 
   req = $.ajax({
     url : '/newpost',
@@ -20,8 +26,11 @@ $('#newtask').submit(function(e){
 
   req.done(function(data){
     console.log('success');
+      location.reload();
   })
-  location.reload();
+
+  e.preventDefault();
+
 })
 
 
