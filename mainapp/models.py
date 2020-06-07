@@ -19,6 +19,7 @@ class User(db.Model, UserMixin):
     comments = db.relationship('Comment', backref='commentor', lazy=True)
     friends = db.relationship('Friends', backref='root_friend', lazy=True)
     lists = db.relationship('List', backref='lists', lazy=True)
+    
 
 
     def __repr__(self):

@@ -1,0 +1,62 @@
+<div class="card mt-4" style=" margin-right:-30px; {% if not home %} left:-15px; height:70vh;{% else %}  height:450px; {% endif %}">
+  <legend class="ml-3 mt-2 ">
+    <select  onchange="homelist()" id="list-select" class="form-control" style="width:200px; font-size:16pt;" name="">
+          <option selected  value="{{lists[0].id}}">{{lists[0].name}}</option>
+          {% if lists[1] %}
+          {% for list in lists %}
+          {% if list != lists[0]  %}
+          <option value="{{list.id}}">{{list.name}}</option>
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+    </select>
+    {%if home%}
+    <a href="{{url_for('dashboard')}}" style="position:absolute; right:20px; top:13px; color:rgb(87, 92, 131); text-decoration:none; font-size:14pt;">Dashboard</a>
+    {% endif %}
+   </legend>
+  <span class="border-bottom ml-2 mr-2"></span>
+
+  <div class="" id="list-area"  >
+
+      <h3 id='loading' style='margin:auto; text-align:center; position:relative; top:100px;'></h3>
+
+    {% for list in lists %}
+
+    <ul class='mainpagelist' id="accountposts{{list.id}}"  style="{% if list != lists[0] %} display: none; {%endif%}position:absolute; left: -30px; list-style-type:none; {% if page!='account' %}  width:105%; height:370px; {% else %}  width:103%; height:60vh;{% endif %}overflow-x:hidden;">
+
+  {% if home %}
+
+  {% if current_user.is_authenticated %}
+  {%for task in list.tasks | reverse %}
+  {% if task.content != 'Completed' %}
+  {% include 'mainpageaccountpost.html' %}
+  {% endif %}
+  {%endfor%}
+  {%for task in list.tasks | reverse %}
+  {% if task.content == 'Completed' %}
+  {% include 'mainpageaccountpost.html' %}
+  {% endif %}
+  {%endfor%}
+  {% endif %}
+  {% else %}
+  <section style="height:20px;"></section>
+  {%for task in list.tasks | reverse %}
+  {% if task.content != 'Completed' %}
+  {% include 'singlepost.html' %}
+  {% endif %}
+  {%endfor%}
+  {%for task in list.tasks | reverse %}
+  {% if task.content == 'Completed' %}
+  {% include 'singlepost.html' %}
+  {% endif %}
+  {%endfor%}
+
+  {% endif %}
+  <p class="text-muted" style="font-size:12pt; text-align:center;" ><i>End of list</i></p>
+</ul>
+  {% endfor %}
+
+</div>
+
+</div>
+<script src="{{url_for('static', filename='scripts/homelists.js')}}"></script>

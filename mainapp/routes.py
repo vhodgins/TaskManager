@@ -93,7 +93,7 @@ def home():
         db.session.add(post)
         db.session.commit()
         return redirect(url_for('home'))
-    return render_template('home.html',lists=lists, tasklikes=tasklikes, title=title, likes=likes, account=current_user, tasks=tasks, mytasklocaltimes=mytasklocaltimes, mytasks=mytasks, form=form,comment=comment, localtimes=localtimes)
+    return render_template('home.html',lists=lists, home='home', tasklikes=tasklikes, title=title, likes=likes, account=current_user, tasks=tasks, mytasklocaltimes=mytasklocaltimes, mytasks=mytasks, form=form,comment=comment, localtimes=localtimes)
 
 @app.route('/register', methods=['GET','POST'])
 def register():
@@ -260,6 +260,8 @@ def delete_list():
     id = request.form['id']
     list = List.query.filter_by(id=id).first()
     for task in list.tasks:
+        for comment in task.comments:
+            db.session.delete(comment)
         db.session.delete(task)
     db.session.commit()
     db.session.delete(list)
@@ -289,6 +291,7 @@ def account(account_id):
     title = 'Hello'
     localtimes = {}
     mytasklocaltimes = {}
+    lists = List.query.filter_by(user=account_id).all()
     if current_user.is_authenticated:
         title = 'Wacky Schemes'
         tasks=Post.query.filter(Post.user_id != current_user.id).all()
@@ -330,8 +333,28 @@ def account(account_id):
 
 
     image_file = url_for('static', filename='pfps/'+current_user.image_file)
-    return render_template('account.html', title=account.username+"'s tasks", page='account', localtimes = localtimes ,tasks=tasks, likes=likes, tasklikes=tasklikes, image_file=image_file, account=account, mytasklocaltimes=localtimes,  mytasks=tasks)
+    return render_template('account.html', lists=lists, title=account.username+"'s tasks", page='account', localtimes = localtimes ,tasks=tasks, likes=likes, tasklikes=tasklikes, image_file=image_file, account=account, mytasklocaltimes=localtimes,  mytasks=tasks)
 
+@app.route('/account/<account_id>/following', methods=['GET', 'POST'])
+def following(account_id):
+    account = User.query.filter_by(id=account_id).first()
+    friends = {}
+    for user in account.friends:
+        u = int(user.friend_id)
+        friends.update({u : User.query.filter_by(id=user.friend_id).first()})
+
+    return render_template('following.html' , account=account, friends=friends)
+
+@app.route('/account/<account_id>/followers', methods=['GET', 'POST'])
+def followers(account_id):
+    accounts = Friends.query.filter_by(user_id=account_id).all()
+    followers = []
+    for account in accounts:
+        follower = User.query.filter_by(id=account.id).first()
+        followers.append(follower)
+
+
+    return render_template('followers.html' , followers=followers)
 
 @app.route('/delete_post', methods=["GET", "POST"])
 def delete_post():
@@ -365,6 +388,7 @@ def add_friend():
             db.session.delete(f)
     else:
         f = Friends(user_id = current_user.id , friend_id = request.form['id'])
+
         db.session.add(f)
     db.session.commit()
     return jsonify({'result' : 'success'})
@@ -382,6 +406,7 @@ def newlist():
     db.session.add(l)
     db.session.commit()
     return jsonify({'result' : 'success'})
+
 
 
 

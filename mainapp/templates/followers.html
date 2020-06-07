@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="buffer" style="height:10.2vh"></div>
+
+{% for follower in followers %}
+<h4>{{follower.username}}</h4>
+{% endfor %}
+
+
+{% endblock content%}
