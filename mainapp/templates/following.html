@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="buffer" style=" height: 10.2vh"></div>
+
+<div class="container">
+  <div class="row">
+    <div class="card">
+      <h4>following ({{account.friends|length}} people)</h4>
+      {% for user in account.friends %}
+      <section style="">
+        <div class=" mr-3 search-page-account mt-1 ">
+            <div class="row ml-3 mt-2 ">
+              <div class="col">
+
+                    <h5><a href="{{url_for('account' , account_id=account.id)}}"> {{friends[user.friend_id].username}}</a></h5>
+              <p style="" class="  text-muted">bio bio bio bio bio bio bio bio bio bio bio bio bio bio bio bio bio bio bio bio</p>
+            </div>
+
+
+
+            <div style="">
+              {% if current_user.is_authenticated %}
+              {% if user.id in friends %}
+              <a href="#"  userid='{{account.id}}' class="followbtn mr-2 btn btn-light">Unfollow</a>
+              {% else %}
+              <a href="#"  userid='{{account.id}}' class="followbtn mr-2 btn btn-light">Follow</a>
+              {% endif %}
+              {% endif %}
+            </div>
+          </div>
+          {% if accounts %}
+          <hr style="margin-bottom:0px; margin-top:20px">
+          {% endif %}
+
+        </div>
+
+      </section>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

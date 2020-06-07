@@ -4,36 +4,42 @@
 
 
 
+    <div class="buffer" style=" height: 11vh"></div>
 
-    <div class="buffer" style=" height: 10.2vh"></div>
-
-    <div class=" container-fluid " style="width:80%;">
+    <div id="account-container"class=" container-fluid  " style="">
         <div class="row" style="margin:auto;">
 
-          <div class="card col-md-5 ">
-            <h3 class="mt-2">{{account.username}}'s tasks</h3>
-            <hr style="margin:0 0 5px 0;">
-            <div class="mt-4" style="width:80%;">
-              {% for task in account.posts %}
-              {% include 'singlepost.html' %}
-              {% endfor %}
+          <div class="card col-lg-5 col-12 " style="margin-top:25px;">
+            <div class="row">
+              <h2>{{account.username}}</h2>
             </div>
-
+            <div class="row">
+              <div class="col col-md-2">
+                <a href="/account/{{account.id}}/followers">Followers</a>
+              </div>
+              <div class="col col-md-2">
+                <a href="/account/{{account.id}}/following">Following</a>
+              </div>
+            </div>
           </div>
 
-          <div class="col-md-1">
+  <div class="col-md-1"></div>
 
+          <div class="col col-lg-6 col-12">
+
+            {% include 'listselect.html' %}
           </div>
-
-          <div class="card col-md-5 ">
-            <h2>2aidura94pfoNVB48OI20FVNlsiyr</h2>
-          </div>
-
 
         </div>
     </div>
 
 
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('#list-area').show(150);
+
+      })
+    </script>
 
 
 

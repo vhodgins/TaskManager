@@ -12,7 +12,7 @@
 
 
 <link rel="stylesheet" href="{{url_for('static', filename='stylesheets/home.css')}}">
-<section id="maincont" style='display:none;'>
+<section id="maincont" style=''>
 
 
 <div class="container mt-4">
@@ -37,62 +37,31 @@
 
   </div>
 
-  <div class="card mt-4" style="height:450px; margin-right:-30px;">
-    <legend class="ml-3 mt-2 ">
-      <select  onchange="homelist()" id="list-select" class="form-control" style="width:200px; font-size:16pt;" name="">
-            <option selected  value="{{lists[0].id}}">{{lists[0].name}}</option>
-            {% if lists[1] %}
-            {% for list in lists %}
-            {% if list != lists[0]  %}
-            <option value="{{list.id}}">{{list.name}}</option>
-            {% endif %}
-            {% endfor %}
-            {% endif %}
-      </select>
-      <a href="{{url_for('dashboard')}}" style="position:absolute; right:20px; top:13px; color:rgb(87, 92, 131); text-decoration:none; font-size:14pt;">Dashboard</a>
-     </legend>
-    <span class="border-bottom ml-2 mr-2"></span>
+  {% include 'listselect.html' %}
 
-    <div class="" id="list-area"  style="">
-        <h3 id='loading' style='margin:auto; text-align:center; position:relative; top:100px;'></h3>
 
-      {% for list in lists %}
-      <ul class='mainpagelist' id="accountposts{{list.id}}"  style="{% if list != lists[0] %} display: none; {%endif%}position:absolute; left: -30px; width:105%; list-style-type:none; height:370px;overflow-x:hidden;">
-    {% if current_user.is_authenticated %}
-    {%for task in list.tasks | reverse %}
-    {% if task.content != 'Completed' %}
-    {% include 'mainpageaccountpost.html' %}
-    {% endif %}
-    {%endfor%}
-    {%for task in list.tasks | reverse %}
-    {% if task.content == 'Completed' %}
-    {% include 'mainpageaccountpost.html' %}
-    {% endif %}
-    {%endfor%}
-    {% endif %}
-  </ul>
-    {% endfor %}
-
-  </div>
-
-  </div>
 </div>
 
   <div class="col-sm-5"></div>
 
 
-  <div id="maincontent" class="card " style="width:100%">
-    <legend class="ml-3 mt-2">Feed</legend>
-    <span class="border-bottom ml-2 mb-2 mr-2"></span>
+  <div id="maincontent" class="card" style="width:100%;">
+    <ul id="f-list" style="list-style-type:none; padding:0;margin:0; height:75vh;  overflow-x:hidden; display:none;">
+    <legend class="ml-3 mt-2 ">Feed</legend>
+    <hr style="margin-top:-5px; margin-bottom:0px; margin-left:5px; margin-right:5px;">
+
     <div class="mr-4" style="margin-left:-25;">
+
   {% if tasks %}
   {%for task in tasks | reverse %}
-
+  <li>
   {% include 'singlepost.html' %}
+</li>
 
   {%endfor%}
   {% else %}
 </div>
+</ul>
 
 <div class="margin-auto" style="width:600px;">
   <p style="text-align:center">You dont have any friends yet</p>
@@ -102,16 +71,17 @@
 </div>
 </div>
 
-<!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
 
 
 
 
 
-<script src="{{url_for('static', filename='scripts/homelists.js')}}"></script>
+
+
 <script type="text/javascript">
   $(document).ready(function(){
-    $('#maincont').show(150);
+    $('#list-area').show(150);
+    $('#f-list').fadeIn(350);
   })
 </script>
 <script src="{{url_for('static', filename='scripts/check.js')}}"></script>

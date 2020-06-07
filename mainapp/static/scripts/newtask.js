@@ -2,6 +2,7 @@ $(document).ready(function(){
 
 $('#newtask').submit(function(e){
   title = $('#titlearea').val();
+
   if ($('#List').val()) {
     list = $('#List').val();
   }
@@ -10,11 +11,10 @@ $('#newtask').submit(function(e){
   }
   date = $('#date').val();
   private = $('#private').val();
-  console.log(date);
 
 
 
-
+  if (title){
   req = $.ajax({
     url : '/newpost',
     type : 'POST',
@@ -28,7 +28,10 @@ $('#newtask').submit(function(e){
     console.log('success');
       location.reload();
   })
-
+}
+else {
+  alert('You must type something in the field.')
+}
   e.preventDefault();
 
 })
